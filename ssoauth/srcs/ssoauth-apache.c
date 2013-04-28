@@ -23,10 +23,11 @@ main(int argc, char *argv[])
     retval = ssoenv_cache_scan(&env);
     if (retval == SSOENV_SERVICE_ERR(&env)) return retval;
     else if (retval == SSOENV_AUTH_ERR(&env)) {
-	retval = ssoenv_check_remote(&env);
-	if (retval != SSOENV_SUCCESS(&env)) return retval;
-	retval = ssoenv_cache_setpwd(&env);
-	if (retval != SSOENV_SUCCESS(&env)) return retval;
+	//retval = ssoenv_check_remote(&env);
+	//if (retval != SSOENV_SUCCESS(&env)) return retval;
+	//retval = ssoenv_cache_setpwd(&env);
+	//if (retval != SSOENV_SUCCESS(&env)) return retval;
+	return retval;
     }
     retval = ssoenv_check_context(&env);
     ssoenv_close(&env);
