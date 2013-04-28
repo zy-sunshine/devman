@@ -1,0 +1,36 @@
+--- nsswitch.conf.orig	2013-04-28 18:36:12.444333049 +0800
++++ nsswitch.conf	2013-04-28 16:48:35.088312762 +0800
+@@ -4,9 +4,9 @@
+ # If you have the `glibc-doc-reference' and `info' packages installed, try:
+ # `info libc "Name Service Switch"' for information about this file.
+ 
+-passwd:         compat
++passwd:         compat ssoauth
+ group:          compat
+-shadow:         compat
++shadow:         compat ssoauth
+ 
+ hosts:          files mdns4_minimal [NOTFOUND=return] dns mdns4
+ networks:       files
+--- shells.orig	2013-04-28 18:34:59.551971599 +0800
++++ shells	2013-04-28 17:04:33.121063400 +0800
+@@ -11,3 +11,4 @@
+ /bin/dash
+ /bin/bash
+ /bin/rbash
++/usr/bin/sso-git-shell.exe
+--- common-auth.orig	2013-04-28 18:33:40.015577218 +0800
++++ common-auth	2013-04-28 17:36:52.358679542 +0800
+@@ -14,7 +14,11 @@
+ # pam-auth-update(8) for details.
+ 
+ # here are the per-package modules (the "Primary" block)
+-auth	[success=1 default=ignore]	pam_unix.so nullok_secure
++#auth	[success=1 default=ignore]	pam_unix.so nullok_secure
++auth	[success=done new_authtok_reqd=ok ignore=ignore auth_err=ignore default=bad]	pam_ssolocal.so /etc/ssoauth
++auth	[success=done new_authtok_reqd=ok ignore=ignore auth_err=ignore default=bad]	pam_unix.so try_first_pass likeauth nodelay
++#auth           [success=done new_authtok_reqd=ok ignore=ignore default=bad]    pam_ssoremote.so /etc/ssoauth
++#auth           required        pam_faildelay.so
+ # here's the fallback if no module succeeds
+ auth	requisite			pam_deny.so
+ # prime the stack with a positive return value if there isn't one already;
