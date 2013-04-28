@@ -107,7 +107,57 @@ mknowstr(char *nowstr, size_t sznowstr)
     tmptr = localtime_r(&now, &tmspace);
     strftime(nowstr, sznowstr, "%Y%m%d%H", tmptr);
 }
+static void
+dump_self(ssoenv_t *self)
+{
+    if (self->syslogv_func)
+        ssoenv_syslog(self, LOG_INFO, "self->syslogv_func %p", self->syslogv_func);
+    else
+        ssoenv_syslog(self, LOG_INFO, "self->syslogv_func NULL");
 
+    if (self->handle)
+        ssoenv_syslog(self, LOG_INFO, "self->handle %p", self->handle);
+    else
+        ssoenv_syslog(self, LOG_INFO, "self->handle NULL");
+
+    if (self->retarr)
+        ssoenv_syslog(self, LOG_INFO, "self->retarr %d, %d, %d", self->retarr[0], self->retarr[1], self->retarr[2]);
+    else
+        ssoenv_syslog(self, LOG_INFO, "self->retarr NULL");
+
+    if (self->auth)
+        ssoenv_syslog(self, LOG_INFO, "self->auth %p", self->auth);
+    else
+        ssoenv_syslog(self, LOG_INFO, "self->auth NULL");
+
+    if (self->cachedir)
+        ssoenv_syslog(self, LOG_INFO, "self->cachedir %s", self->cachedir);
+    else
+        ssoenv_syslog(self, LOG_INFO, "self->cachedir NULL");
+
+
+    if (self->username)
+        ssoenv_syslog(self, LOG_INFO, "self->username %s", self->username);
+    else
+        ssoenv_syslog(self, LOG_INFO, "self->username NULL");
+
+    if (self->rhost)
+        ssoenv_syslog(self, LOG_INFO, "self->rhost %s", self->rhost);
+    else
+        ssoenv_syslog(self, LOG_INFO, "self->rhost NULL");
+
+    ssoenv_syslog(self, LOG_INFO, "self->uid %d", (int)self->uid);
+    if (self->enchexpwd)
+        ssoenv_syslog(self, LOG_INFO, "self->enchexpwd %s", self->enchexpwd);
+    else
+        ssoenv_syslog(self, LOG_INFO, "self->enchexpwd NULL");
+
+    if (self->ssousers)
+        ssoenv_syslog(self, LOG_INFO, "self->ssousers %p", self->ssousers);
+    else
+        ssoenv_syslog(self, LOG_INFO, "self->ssousers NULL");
+
+}
 int
 ssoenv_shortcut_scan(ssoenv_t *self)
 {
@@ -128,7 +178,9 @@ ssoenv_shortcut_scan(ssoenv_t *self)
 	if ((p1 = strchr(p0, '|')) == NULL) continue;
 	*p1++ = 0;
 	if (strcmp(lnbuf, nowstr)) continue;
+	if (self->rhost == NULL) continue;
 	if (strcmp(p0, self->rhost)) continue;
+
 	if (strcmp(p1, self->username)) continue;
 	fclose(rfp);
 	self->auth = shortcut_auth;
