@@ -1,0 +1,24 @@
+# -*- python -*-
+
+Import('env', 'cenv', 'pamenv')
+
+env.SharedLibrary('nss_ssoauth', ['nss_ssoauth.c', 'ssorecords.c'])
+srcs = ['md5.c', 'ssodefs.c', 'ssorecords.c']
+objs = map(lambda src: env.Object(src), srcs)
+sobjs = map(lambda src: env.SharedObject(src), srcs)
+srcs = ['ssodefs-c.c']
+cobjs = objs + map(lambda src: cenv.Object(src), srcs)
+csobjs = sobjs + map(lambda src: cenv.SharedObject(src), srcs)
+srcs = ['ssodefs-pam.c']
+pamobjs = cobjs + map(lambda src: pamenv.Object(src), srcs)
+pamsobjs =  csobjs + map(lambda src: pamenv.SharedObject(src), srcs)
+
+ssoauth_apache = cenv.Program('ssoauth', ['ssoauth-apache.c'] + cobjs)
+ssoauth_dev_apache = env.Program('ssoauth-dev', ['ssoauth-apache-dev.c'] + objs)
+for part in ('local', 'remote'):
+    pamenv.SharedLibrary('sso' + part, ['sso%s-pam.c' % part] + pamsobjs)
+git_shell = env.Program('sso-git-shell', ['sso-git-shell.c', 'ssorecords.c'])
+showuser = env.Program('sso-showuser', 'sso-showuser.c')
+
+Export('objs', 'sobjs', 'cobjs', 'csobjs')
+Export('ssoauth_apache', 'ssoauth_dev_apache', 'git_shell')

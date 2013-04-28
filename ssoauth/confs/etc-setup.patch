@@ -1,0 +1,32 @@
+--- nsswitch.conf.orig	2010-10-28 18:07:36.000000000 +0800
++++ nsswitch.conf	2011-01-27 17:42:08.000000000 +0800
+@@ -1,8 +1,8 @@
+ # /etc/nsswitch.conf:
+ # $Header: /var/cvsroot/gentoo/src/patchsets/glibc/extra/etc/nsswitch.conf,v 1.1 2006/09/29 23:52:23 vapier Exp $
+ 
+-passwd:      compat
+-shadow:      compat
++passwd:      compat ssoauth
++shadow:      compat ssoauth
+ group:       compat
+ 
+ # passwd:    db files nis
+--- shells.orig	2011-01-27 23:24:45.000000000 +0800
++++ shells	2011-01-27 23:24:55.000000000 +0800
+@@ -8,3 +8,4 @@
+ /bin/sh
+ /bin/tcsh
+ /bin/zsh
++/usr/bin/sso-git-shell.exe
+--- pam.d/system-auth.orig	2011-01-27 17:37:32.000000000 +0800
++++ pam.d/system-auth	2011-01-28 00:40:53.000000000 +0800
+@@ -1,5 +1,8 @@
+ auth		required	pam_env.so 
+-auth		required	pam_unix.so try_first_pass likeauth nullok
++auth		[success=done new_authtok_reqd=ok ignore=ignore auth_err=ignore default=bad]	pam_ssolocal.so /etc/ssoauth
++auth		[success=done new_authtok_reqd=ok ignore=ignore auth_err=ignore default=bad]	pam_unix.so try_first_pass likeauth nodelay
++auth		[success=done new_authtok_reqd=ok ignore=ignore default=bad]	pam_ssoremote.so /etc/ssoauth
++auth		required	pam_faildelay.so
+ auth		optional	pam_permit.so
+ 
+ account		required	pam_unix.so 

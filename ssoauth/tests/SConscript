@@ -1,0 +1,6 @@
+# -*- python -*-
+
+Import('env', 'cenv', 'cobjs')
+
+cenv.Program('ssoauth-test', ['ssoauth-test.c'] + cobjs)
+env.Program('ssopamtest', ['ssopamtest.c'], LIBS=['pam', 'pam_misc'])

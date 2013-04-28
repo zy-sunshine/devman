@@ -1,0 +1,18 @@
+# -*- python -*-
+
+import os.path
+
+env = Environment(CCFLAGS = ['-g', '-Wall'], PROGSUFFIX = '.exe',
+                  CPPDEFINES = ['_GNU_SOURCE',
+                                'NDEBUG'])
+#                                'NOT_REAL_REMOTE_CHECK'])
+cenv = env.Clone()
+cenv.ParseConfig('curl-config --cflags --libs')
+
+pamenv = cenv.Clone()
+pamenv['SHLIBPREFIX'] = 'pam_'
+pamenv.Append(LIBS = ['pam', 'pam_misc'])
+
+Export('env', 'cenv', 'pamenv')
+SConscript(os.path.join('srcs', 'SConscript'))
+SConscript(os.path.join('tests', 'SConscript'))
