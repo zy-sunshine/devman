@@ -17,6 +17,7 @@ mkdir -p $DESTDIR$bindir
 mkdir -p $DESTDIR$sbindir
 mkdir -p $DESTDIR$pamdir
 mkdir -p $DESTDIR$apache_modules_confdir
+mkdir -p $DESTDIR$apache_modules_confdir_en
 mkdir -p $DESTDIR$apache_docroot/ssoauth-test
 mkdir -p $DESTDIR$apache_docroot/ssoauth-dev-test
 
