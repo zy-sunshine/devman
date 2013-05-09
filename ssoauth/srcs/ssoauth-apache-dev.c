@@ -1,5 +1,5 @@
 #include "ssodefs.h"
-
+#include <syslog.h>
 int
 main(int argc, char *argv[])
 {
@@ -14,8 +14,11 @@ main(int argc, char *argv[])
     if ((p = strchr(pwd, '\n')) == NULL) exit(9);
     *p = 0;
 
-    retval = ssoenv_init(&env, NULL, user, "", pwd, "rb");
-    if (retval != SSOENV_SUCCESS(&env)) return retval;
+    retval = ssoenv_init(&env, argv[1], user, "", pwd, "rb");
+    if (retval != SSOENV_SUCCESS(&env)){
+        syslog(LOG_ERR, "apache ssoauth dev: ssoenv_init failed %s %s retcode %d", user, pwd, retval); 
+        return retval;
+    }
     if (strcmp(user, pwd)) exit(10);
     return ssoenv_check_context(&env);
 }

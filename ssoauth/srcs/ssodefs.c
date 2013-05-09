@@ -28,8 +28,10 @@ ssoenv_init(ssoenv_t *self, const char *cachedir, const char *user,
     self->rhost = rhost;
     ssoenv_set_password(self, pwd);
     snprintf(fpath, sizeof(fpath), "%s/ssousers.txt", self->cachedir);
-    if (!(self->ssousers = ssorecord_open(fpath, sizeof(ssouser_rec_t), mode)))
+    if (!(self->ssousers = ssorecord_open(fpath, sizeof(ssouser_rec_t), mode))){
+	ssoenv_syslog(self, LOG_ERR, "apache ssoauth can not open ssorecord file %s", fpath);
 	return SSOENV_SERVICE_ERR(self);
+    }
     return SSOENV_SUCCESS(self);
 }
 

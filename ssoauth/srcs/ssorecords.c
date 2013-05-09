@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <syslog.h>
 #include "ssorecords.h"
 
 void
@@ -42,17 +43,31 @@ ssorecord_open(const char *fname, size_t szrec, const char *mode)
     struct stat st;
     ssorecord_t *self;
 
-    if ((rc = stat(fname, &st)) < 0) goto errquit0;
-    if (st.st_size % szrec != 0) goto errquit0;
-    if (!(self = malloc(sizeof(ssorecord_t) + st.st_size + 8 * szrec)))
+    if ((rc = stat(fname, &st)) < 0) {
+        syslog(LOG_ERR, "apache ssoauth: can not get file status %s", fname);
+        goto errquit0;
+    }
+    if (st.st_size % szrec != 0) {
+        syslog(LOG_ERR, "apache ssoauth: file(%s) size(%ld) wrong expect %% %d", fname, st.st_size, szrec);
+        goto errquit0;
+    }
+    if (!(self = malloc(sizeof(ssorecord_t) + st.st_size + 8 * szrec))) {
+        syslog(LOG_ERR, "apache ssoauth: can not malloc %ld size for ssorecord", sizeof(ssorecord_t) + st.st_size + 8 * szrec);
 	goto errquit0;
-    if (!(self->fp = fopen(fname, mode))) goto errquit1;
+    }
+    if (!(self->fp = fopen(fname, mode))) {
+        syslog(LOG_ERR, "apache ssoauth: can not open file(%s) with mode %s uid(%d) gid(%d)", fname, mode, getuid(), getgid());
+        goto errquit1;
+    }
     strncpy(self->mode, mode, sizeof(self->mode));
     self->szrec = szrec;
     self->numrec = st.st_size / szrec;
     self->maxrec = self->numrec + 8;
     self->start = (char *)(self + 1);
-    if (fread(self->start, 1, st.st_size, self->fp) < st.st_size) goto errquit2;
+    if (fread(self->start, 1, st.st_size, self->fp) < st.st_size){
+        syslog(LOG_ERR, "apache ssoauth: can not read file(%s)", fname);
+        goto errquit2;
+    }
     return self;
  errquit2:
     fclose(self->fp);
