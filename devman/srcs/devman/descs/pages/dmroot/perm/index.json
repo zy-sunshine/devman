@@ -1,0 +1,10 @@
+{
+    "title": "{%_('Permissions')%}",
+    "barlinks": [["{%_('Index')%}", "%(homeurl)s"],
+                 ["{%_('Member')%}", "%(homeurl)s/member"],
+                 ["{%_('Permission')%}", "%(homeurl)s/perm"]],
+    "viewrows": [[ { "align": "left",
+		     "klass": "DMViewPermList" }],
+		 [ { "align": "left",
+		     "klass": "DMViewPermNew" } ]]
+}

@@ -1,0 +1,30 @@
+{% load i18n %}
+{% if view.editable %}
+<form action="{{ view.actionurl }}" method="post">{% csrf_token %}
+  <input type="hidden" name="fromurl" value="{{ fromurl }}"/>
+  {% endif %}
+  <tr class="title"><td colspan="{{ view.row_width }}">{{ view.title0 }}</td></tr>
+  {% for subperms in view.subperms0 %}<tr>
+    {% for subperm in subperms %}
+    {% if not subperm %}<td>&nbsp;</td>
+    {% else %}<td>{% if view.editable %}
+      <input type="checkbox" name="{{ subperm.check }}" checked/>
+      {% endif %}
+      {{ subperm.name }}</td>
+    {% endif %}
+    {% endfor %}
+  </tr>{% endfor %}
+  {% if view.editable %}
+  <tr class="title"><td colspan="{{ view.row_width }}">{{ view.title1 }}</td></tr>
+  {% for subperms in view.subperms1 %}<tr>
+    {% for subperm in subperms %}
+    {% if not subperm %}<td>&nbsp;</td>
+    {% else %}<td><input type="checkbox" name="{{ subperm.check }}"/>
+      {{ subperm.name }}</td>
+    {% endif %}
+    {% endfor %}
+  </tr>{% endfor %}
+  <tr><td colspan="{{ view.row_width }}" align="center">
+      <input type="submit" value="{% trans "Commit" %}"/></td></tr>
+  {% endif %}
+{% if view.editable %}</form>{% endif %}

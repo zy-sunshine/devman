@@ -1,0 +1,11 @@
+{% load i18n %}
+{% if view.editable %}
+<form action="{{ view.actionurl }}" method="post">{% csrf_token %}
+  <input type="hidden" name="fromurl" value="{{ cururl }}"/>
+  <tr class="title"><td colspan="{{ view.width }}">{% trans "New Permission" %}</td></tr>
+  <tr><td>{% trans "New Permission Name" %}</td>
+    <td colspan="{{ view.width_1 }}"><input type="text" name="NEW_PERM_NAME"/></td></tr>
+  <tr><td colspan="{{ view.width }}" align="center">
+      <input type="submit" value="{% trans "Commit" %}"/></td></tr>
+</form>
+{% endif %}

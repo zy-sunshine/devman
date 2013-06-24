@@ -1,0 +1,46 @@
+a:link{ color: #286EE6; }
+a:visited{ color: #1C4EA3; }
+a:hover, a:active{ color: #EB0800; }
+a.doesnotexist{ text-decoration: none; border-bottom: 1px dashed #aaa; color: #888; }
+div.info{ border: 1px solid #C2E86C; background-color: #FDE6E0; font-size: 100%; font-weight: bold; margin: 1em 0;}
+div.info span{ display: inline-block; padding: 0.5em 1em; border-right: 1px solid #C2E86C; }
+form.wakawaka_delete_form{ padding: 1em; margin-top: 3em; background-color: #F3D39E; }
+form.wakawaka_delete_form p{ margin: 0; display: inline; }
+ul.messages{ color: #C70800; }
+ul.errorlist{ color: #C70800; }
+table.wiki {
+border: 1px solid #ccc;
+border-collapse: collapse;
+border-spacing: 0;
+}
+table.wiki td { border: 1px solid #ccc;  padding: .1em .25em; }
+table.wiki th {
+border: 1px solid #bbb;
+padding: .1em .25em;
+background-color: #f7f7f7;
+}
+
+div.wiki_box a
+{
+color: #acf;
+}
+div.wiki_box p
+{
+margin: 5px 0;
+}
+div.wiki_box ul
+{
+padding-left: 20px;
+margin-left: 0;
+}
+div.wiki_box div.wiki_box_title
+{
+margin-bottom: 5px;
+font-size: 140%;
+}
+table.history{ border-collapse: collapse; border: none; font-size: 0.8em; }
+table.history th{ border: none; padding: 0.5em 1em; border: 1px solid #aaa; background-color: #ccc;}
+table.history td{ border: none; padding: 0.5em 1em; border: 1px solid #ddd;}
+pre.changes{ width: 100%; overflow: auto; font-size: 0.8em; font-family: monospace;  }
+p.revert-warning{ background-color: #FEF098; padding: 1em; color: black; }
+div.page{ font-family: monospace; font-size: 1.0em; line-height: 1.5em; }

@@ -1,0 +1,107 @@
+{% load i18n %}
+<html><head>
+<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8"/>
+<link rel="shortcut icon" href="{{ homeurl }}/incs/favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" href="{{ themecss }}" type="text/css"/>
+<link rel="stylesheet" href="{{ wikicss }}" type="text/css"/>
+<link rel="stylesheet" href="{{ datecss }}" type="text/css"/>
+<link rel="stylesheet" href="{{ chartcss }}" type="text/css"/>
+<script type="text/javascript" src="{{ datejs }}"></script>
+<script type="text/javascript" src="{{ ajaxjs }}"></script>
+<script type="text/javascript" src="{{ chartjs }}"></script>
+{% if trial %}
+<title>!Dev!{{ title }}!</title>
+{% else %}
+<title>{{ title }}</title>
+{% endif %}
+{% if tourl %}
+<script>window.location="{{ tourl }}";</script>
+{% endif %}
+</head><body>
+{% autoescape off %}
+{% if trial %}
+<h1 align="center">!Dev!{{ title }}!</h1>
+{% else %}
+<h1 align="center">{{ title }}</h1>
+{% endif %}
+<table width="100%" align="center"><tr><td>
+<table class="border" cellpadding="4" align="left"><tr class="tiplinks">
+  <td><a href="{{ rooturl }}">{% trans "Home" %}</a></td>
+  <td><a href="{{ rooturl }}/dmroot">{% trans "MemberPerm" %}</a></td>
+  <td><a href="{{ rooturl }}/projs">{% trans "Projects" %}</a></td>
+  <td><a href="{{ rooturl }}/subsys">{% trans "Subsys" %}</a></td>
+  <td><a href="{{ rooturl }}/log">{% trans "Log" %}</a></td>
+</tr></table>
+<table class="border" align="right"><tr class="tiplinks">
+    <td>{% if not mobj_url %}{{ mobj_prompt }}{% else %}
+      <a href="{{ mobj_url }}">{{ mobj_prompt }}</a>{% endif %}</td>
+    {% if logout %}<td><a href="{{ logout.urlpath }}">{{ logout.prompt }}</td>{% endif %}
+    <td>{% trans "Current Time" %}({{ curtime }})</td> 
+</tr></table>
+</td></tr></table>
+
+<hr size=1/>
+{% if failed %}
+{% trans "Requested operation is failed:" %}[{{ failed }}]
+{% else %}
+{% if template %}
+{% include template %}
+{% else %}
+    
+<table width="100%" align="center"><tr><td valign="top"><!-- left panel -->
+    <table class="border">
+      <tr class="title"><td width="100px">{% trans "Menu" %}</td></tr>
+      {% for barlink in barlinks %}<tr class="mainmenu"><td>
+          <a href="{{ barlink.urlpath }}">{{ barlink.prompt }}</a>
+      </td></tr>
+      {% endfor %}
+      {% for seclink in seclinks %}<tr class="secmenu"><td>
+          <a href="{{ seclink.urlpath }}">{{ seclink.prompt }}</a>
+      </td></tr>
+      {% endfor %}
+      
+    </table>
+    </td><td valign="top"><!-- right area -->
+    <table><tr><td>
+     
+    <table align="left"><tr class="tiplinks">    
+      {% if project %}
+        <td>{% trans "Project" %}: {{ project }}</td>
+      {% endif %}
+      {% if tiplinks %}
+        {% for tiplink in tiplinks %}
+        <td><a href="{{ tiplink.urlpath }}">{{ tiplink.prompt }}</a></td>
+        {% endfor %}
+      {% endif %}
+    </tr></table>
+    <table align="right"><tr class="tiplinks">    
+      {% if filters %}
+      <form method="post" action="{{filters.urlpath}}">{% csrf_token %}
+      <tr><td><input type="text" name="searchVaule" size="20"/></td>
+          <td><input type="submit" name="search" value="{% trans "Search" %}"/></td>  
+      </tr></form>
+      {% endif %}
+    </tr></table>
+    </td></tr><tr><td>
+    <!-- DMView Area -->
+    <table align="center" >
+      {% for viewrow in viewrows %}<tr><td>{% for view in viewrow %}
+          <table align="{{ view.align }}" width="{{ view.twidth }}" class="border">
+            {% include view.template %}</table>
+          {% endfor %}</td></tr>{% endfor %}
+    </table>
+</td></tr></table>
+
+{% endif %}
+{% endif %}
+</table>
+
+<hr size=1/>
+<table width="100%" align="center"><tr><td>
+
+<table class="border" cellpadding="4" align="right"><tr><td bgcolor="#092e20">
+<font size="+1" color="#C0C0C0"><b>{{ footprint }}</b></font>
+</td></tr></table>
+</td></tr></table>
+{% endautoescape %}
+</body></html>

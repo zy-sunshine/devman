@@ -1,0 +1,30 @@
+{% load i18n %}
+<tr class="title">
+  <td>{% trans "Name" %}</td>
+  <td>{% trans "Member" %}</td>
+  <td colspan="{{ view.row_width }}">{% trans "Subpermissions" %}</td>
+  <td>{% trans "Edit" %}</td>
+  <td>{% trans "Delete" %}</td>
+</tr>
+{% for perm in view.permlist %}
+<tr><td rowspan="{{ perm.rowspan }}">{{ perm.name }}</td>
+  <td rowspan="{{ perm.rowspan }}">{{ perm.nummembers }}</td>
+  {% for subperm in perm.subperms0 %}
+  {% if subperm %}<td>{{ subperm.name }}</td>
+  {% else %}<td>&nbsp;</td>{% endif %}
+  {% endfor %}
+  {% if view.editable %}
+  <td rowspan="{{ perm.rowspan }}"><a href="{{ perm.editurl }}">{% trans "Edit" %}</a></td>
+  <td rowspan="{{ perm.rowspan }}"><a href="{{ perm.delurl }}">{% trans "Delete" %}</a></td>
+  {% else %}
+  <td rowspan="{{ perm.rowspan }}">N/A</td>
+  <td rowspan="{{ perm.rowspan }}">N/A</td>
+  {% endif %}
+</tr>
+{% for subperms in perm.subperms1 %}<tr>
+  {% for subperm in subperms %}
+  {% if subperm %}<td>{{ subperm.name }}</td>
+  {% else %}<td>&nbsp;</td>{% endif %}
+  {% endfor %}
+</tr>{% endfor %}
+{% endfor %}

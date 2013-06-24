@@ -1,0 +1,11 @@
+{
+    "title": "{%_('View/Edit Member Preferences')%}",
+    "barlinks": [["{%_('Home')%}", "%(homeurl)s"],
+                 ["{%_('Member')%}", "%(homeurl)s/member"],
+                 ["{%_('Permission')%}", "%(homeurl)s/perm"]],
+    "tiplinks": [["{%_('Back')%}", "%(homeurl)s/member"]],
+    "viewrows": [[{ "align": "left",
+		    "klass": "DMViewMemberPrefs"} ],
+		 [{ "align": "left",
+		    "klass": "DMViewMemberPerms" } ]]
+}

@@ -1,0 +1,9 @@
+{% load i18n %}
+<form action="{{ homeurl }}/proj/new" method="post">{% csrf_token %}
+  <input type="hidden" name="fromurl" value="{{ fromurl }}"/>
+  <tr class="title"><td colspan="{{ view.width }}">{% trans "New Project" %}</td></tr>
+  <tr><td>{% trans "New Project Name" %}</td>
+    <td colspan="{{ view.width_1 }}"><input type="text" name="NEW_PROJ_NAME"/></td></tr>
+  <tr><td colspan="{{ view.width }}" align="center">
+      <input type="submit" value="{% trans "New project" %}"/></td></tr>
+</form>

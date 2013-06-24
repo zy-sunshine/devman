@@ -1,0 +1,16 @@
+# ldapadd -x -D "cn=Manager,dc=hackos,dc=org" -W -f startup.ldif
+
+dn: dc=hackos,dc=org
+objectclass: dcObject
+objectclass: organization
+o: midev
+dc: hackos
+
+dn: cn=Manager,dc=hackos,dc=org
+objectclass: organizationalRole
+cn: Manager
+
+dn: ou=People,dc=hackos,dc=org
+ou: People
+objectClass: top
+objectClass: organizationalUnit

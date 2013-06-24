@@ -1,0 +1,10 @@
+{% load i18n %}
+<form action="{{ homeurl }}/member/new" method="post">{% csrf_token %}
+  <input type="hidden" name="fromurl" value="{{ cururl }}"/>
+  <input type="hidden" name="NEW_MEMBER_SID" value="{{ view.SID_SSOAUTH }}"/>
+  <tr class="title"><td colspan="{{ view.width }}">{% trans "New Sso Member" %}</td></tr>
+  <tr><td>{% trans "Login Name" %}</td>
+    <td colspan="{{ view.width_1 }}"><input type="text" name="NEW_MEMBER_LOGIN"/></td></tr>
+  <tr><td colspan="{{ view.width }}" align="center">
+      <input type="submit" value="{% trans "New Sso Member" %}"/></td></tr>
+</form>

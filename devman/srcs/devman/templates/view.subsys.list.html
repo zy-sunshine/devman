@@ -1,0 +1,26 @@
+{% load i18n %}
+<tr class="title"><td colspan="{{ view.width }}">{{ view.title }}</td></tr>
+<tr class="head"><td>{% trans "Link" %}</td>
+  <td colspan="{{ view.row_width }}">{% trans "Members" %}</td>
+  <td>{% trans "Edit" %}</td>
+</tr>
+{% for subsys in view.subsyses %}
+<tr><td rowspan="{{ subsys.rowspan }}">
+    {% if subsys.link %}<a href="{{ subsys.link }}">{{ subsys.linkname }}</a>
+    {% else %}{{ subsys.linkname }}{% endif %}
+  </td>
+  {% for member in subsys.members0 %}
+  {% if member %}<td>{{ member.name }}</td>
+  {% else %}<td>&nbsp;</td>{% endif %}
+  {% endfor %}
+  {% if subsys.editurl %}<td rowspan="{{ subsys.rowspan }}">
+    <a href="{{ subsys.editurl }}">{% trans "Edit" %}</a></td>
+  {% else %}<td rowspan="{{ subsys.rowspan }}">&nbsp;</td>{% endif %}
+</tr>
+{% for members in subsys.members1 %}<tr>
+  {% for member in members %}
+  {% if member %}<td>{{ member.name }}</td>
+  {% else %}<td>&nbsp;</td>{% endif %}
+  {% endfor %}
+</tr>{% endfor %}
+{% endfor %} <!-- subsys -->

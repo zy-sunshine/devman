@@ -1,0 +1,180 @@
+body {
+    background: #E3EDCD;
+}
+table {
+    word-break:break-all;
+    word-wrap:break-all;
+}
+table.border {
+    border: 1px solid #ADADAD;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+table tr td {
+    word-wrap : break-word ;
+}
+table.border tr td {
+    word-wrap : break-word ;
+    border:solid #ADADAD;
+    border-width:0px 1px 1px 0px;
+    padding:10px 0px;
+}
+table tbody tr.mainmenu
+{ 
+    background: #FDE6E0;
+    font-weight: bold;
+    font-size: 110%;
+    text-align: center; 
+}
+
+table tbody tr.secmenu
+{
+    background: #E0E0E0;
+    font-weight: normal;
+    font-size: 90%;
+    text-align: center;
+}
+
+table tbody tr.tiplinks
+{
+    background:  #FDE6E0;
+    font-weight: bold;
+    font-size: 85%;
+}
+
+table tbody tr.title
+{
+    background: #FDE6E0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+table tbody tr.head
+{ 
+    background: #FAF9B0;
+}
+
+table tbody tr.focus
+{ 
+    background: #FAF9B0;
+}
+
+table tbody td.active
+{
+}
+
+table tbody td.inactive
+{ 
+    text-decoration: line-through;
+}
+
+input.show[type=text]
+{
+    width: 100%;
+    font-size: 11pt;
+    background:transparent;
+    border:0;
+}
+
+input.edit[type=text]
+{
+    width: 100%;
+    font-size: 11pt;
+}
+
+textarea
+{
+    width:80%;
+}
+
+span.tag
+{
+    color: red
+}
+
+div.tips
+{
+    color: red;
+    font-size: 8pt; 
+}
+
+div.roadmap
+{
+    width: 160px;
+    height: 70px;
+    background: green;
+    color:white;
+    text-align:center;
+}
+
+a.inputAddress{
+    font-size: 9pt; 
+}
+
+input#page
+{
+    width: 3%;
+}
+
+pre {
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    *white-space : normal ; /* Internet Explorer 5.5+ */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.C0{
+    background: #CE0000;
+}
+
+.C1{
+    background: #FF5151;
+}
+
+.C2{
+    background: orange;
+}
+
+.C3{
+    background: yellow;
+}
+
+.C4{
+    background: green
+}
+
+.C5{
+    background: lightblue;
+}
+
+.C6{
+    background: pink;
+}
+
+.C7{
+    background: gray;
+}
+
+.C8{
+    background: purple;
+}
+
+.C9{
+    background: white;
+}
+
+.C10{
+    background: #E3EDCD;
+    
+}
+.C11{
+    background: #F8F8F8;
+    
+}
+.C12{
+    background: #E8E8E8;
+    
+}

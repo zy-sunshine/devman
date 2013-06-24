@@ -1,0 +1,20 @@
+{% load i18n %}
+<form action="{{ homeurl }}/member/new" method="post">{% csrf_token %}
+  <input type="hidden" name="fromurl" value="{{ cururl }}"/>
+  <input type="hidden" name="NEW_MEMBER_SID" value="{{ view.SID_LOCAL }}"/>
+  <tr class="title"><td colspan="{{ view.width }}">{% trans "New Local Member" %}</td></tr>
+  <tr><td>{% trans "Login Name" %}</td>
+    <td colspan="{{ view.width_1 }}"><input type="text" name="NEW_MEMBER_LOGIN"/></td></tr>
+  <tr><td>{% trans "Show Name" %}</td>
+    <td colspan="{{ view.width_1 }}"><input type="text" name="NEW_MEMBER_NAME"/></td></tr>
+  <tr><td>{% trans "Password" %}</td>
+    <td colspan="{{ view.width_1 }}"><input type="password" name="NEW_MEMBER_PWD"/></td></tr>
+  <tr><td>{% trans "Password Confirm" %}</td>
+    <td colspan="{{ view.width_1 }}"><input type="password" name="NEW_MEMBER_PWDCFM"/></td></tr>
+  <tr><td>{% trans "Email" %}</td>
+    <td colspan="{{ view.width_1 }}"><input type="text" name="NEW_MEMBER_EMAIL"/></td></tr>
+  <tr><td>{% trans "Mobile" %}</td>
+    <td colspan="{{ view.width_1 }}"><input type="text" name="NEW_MEMBER_MOBILE"/></td></tr>
+  <tr><td colspan="{{ view.width }}" align="center">
+      <input type="submit" value="{% trans "New Local Member" %}"/></td></tr>
+</form>

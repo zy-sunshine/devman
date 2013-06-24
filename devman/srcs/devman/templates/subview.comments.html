@@ -1,0 +1,12 @@
+{% load i18n %}
+{% if view.comments %}
+{% for cmt in view.comments.comments %}
+{% if cmt.title %}
+<tr><td align="center" colspan="{{ view.width }}">{{ cmt.title }}</td></tr>
+{% endif %}
+<tr><td>&nbsp;</td>
+  {% if cmt.comment %}<td colspan="{{ view.width_1 }}">{{ cmt.comment }}</td>
+  {% else %}<td colspan="{{ view.width_1 }}">&nbsp;</td>{% endif %}
+</tr>
+{% endfor %}
+{% endif %}

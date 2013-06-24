@@ -1,0 +1,8 @@
+{
+    "title": "{%_('Edit Subsystem Members')%}",
+    "barlinks": [["{%_('Index')%}", "%(homeurl)s"]],
+    "seclinks": [],
+    "tiplinks": [["{%_('Back')%}", "%(homeurl)s/subsys"]],
+    "viewrows": [[{ "align": "left",
+		    "klass": "DMViewSubsysEdit" }]]
+}

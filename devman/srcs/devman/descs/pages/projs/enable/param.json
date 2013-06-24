@@ -1,0 +1,5 @@
+{
+    "title": "{%_('Edit a project')%}",
+    "action": { "klass": "DMActionProjectEdit",
+		"enable": true }
+}

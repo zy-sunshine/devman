@@ -1,0 +1,10 @@
+{% load i18n %}
+<tr class="title"><td>{% trans "Member" %}</td>
+  <td>{% trans "Enable" %}</td></tr>
+{% for member in view.disables %}
+<tr><td>{{ member.name }}</td>
+  {% if member.enableurl %}
+  <td><a href="{{ member.enableurl }}">{% trans "Enable" %}</a></td>
+  {% else %}<td>N/A</td>{% endif %}
+</tr>
+{% endfor %}

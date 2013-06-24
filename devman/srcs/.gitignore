@@ -1,0 +1,9 @@
+
+# for eclipse project files
+.project
+.pydevproject
+.settings
+
+# django datebase
+devman.sqlite3
+

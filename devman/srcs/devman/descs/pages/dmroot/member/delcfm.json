@@ -1,0 +1,5 @@
+{
+    "title": "{%_('Delete Member Confirm')%}",
+    "viewrows": [[{ "align": "center",
+		    "klass": "DMViewMemberDeleteConfirm" } ]]
+}

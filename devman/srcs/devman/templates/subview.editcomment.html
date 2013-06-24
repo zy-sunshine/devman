@@ -1,0 +1,11 @@
+{% load i18n %}
+{% if view.comment.title %}
+<tr class="head"><td align="center" colspan="{{ view.width }}" >{{ view.comment.title }}</td></tr>
+{% endif %}
+<tr><td>{% trans "format" %}</td><td colspan="{{ view.width_1 }}">
+  {% for fmt in view.comment.formats %}
+  <input type="radio" name="COMMENT_FORMAT" value="{{ fmt.value }}" {{ fmt.checked }}>{{ fmt.label }}</input>
+  {% endfor %}</td></tr>
+<tr><td align="center" colspan="{{ view.width }}" width="88%">
+    <textarea name="COMMENT_TEXT" rows="{{ view.comment.rows }}" cols="{{ view.comment.cols }}">{{ view.comment.comment }}</textarea>
+</td></tr>

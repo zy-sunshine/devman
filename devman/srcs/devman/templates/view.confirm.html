@@ -1,0 +1,6 @@
+{% load i18n %}
+<tr><td colspan="{{ view.width }}" align="center"><font size="+2">{{ view.prompt }}</font></td></tr>
+<tr>
+  <td bgcolor="#C0C0FF"><a href="{{ view.confirm_url }}">{% trans "CONFIRM" %}<a></td>
+  <td bgcolor="#FFC0C0"><a href="{{ view.cancel_url }}">{% trans "CANCEL" %}</a></td>
+</tr>

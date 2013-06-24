@@ -1,0 +1,5 @@
+{
+    "title": "{%_('Delete Permission')%}",
+    "action": { "klass": "DMActionPermDel",
+		"tourl": "%(homeurl)s/perm" }
+}

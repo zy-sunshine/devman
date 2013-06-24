@@ -1,0 +1,12 @@
+{
+    "title": "{%_('New Project')%}",
+    "barlinks": [["{%_('Index')%}", "%(homeurl)s"]],
+    "seclinks": [["{%_('NewProj')%}", "%(homeurl)s/projs"]],
+    "viewrows": [
+                   [{"align": "center",
+                     "klass": "DMViewProjectNew"},
+                    {"align": "center",
+                     "klass": "DMViewProjectList"}]
+                 ]
+
+}

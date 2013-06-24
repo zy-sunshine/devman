@@ -1,0 +1,7 @@
+{% for weeks in view.weekrows %}<tr>
+  {% for week in weeks %}
+  {% if week %}<td><a href="{{ week.url }}">{{ week.prompt }}</a></td>
+  {% else %}<td>&nbsp;</td>
+  {% endif %}
+  {% endfor %}
+</tr>{% endfor %}

@@ -1,0 +1,14 @@
+{% load i18n %}
+{% if trial %}
+<form method="post" action="{{ rooturl }}/devman">{% csrf_token %}
+  <input type="hidden" name="fromurl" value="{{ fromurl }}"/>
+  <tr class="head"><td align="center" colspan="{{ view.width }}">{% trans "Login" %}</td></tr>
+  <tr><td>{% trans "Login Name" %}</td>
+    <td><input type="text" name="loginname" value=""/></td></tr>
+  <tr><td align="center" colspan="{{ view.width }}">
+      <input type="submit" name="loginform" value="{% trans "Submit" %}"/>
+  </td></tr>
+</form>
+{% else %}
+<tr><td>{% trans "Don't login from here, this is a development only page." %}</td></tr>
+{% endif %}

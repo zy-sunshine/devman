@@ -1,0 +1,4 @@
+{
+    "title": "{%_('Delete a project')%}",
+    "action": { "klass": "DMActionProjectDelete" }
+}

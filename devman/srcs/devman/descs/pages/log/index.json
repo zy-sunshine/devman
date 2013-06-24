@@ -1,0 +1,12 @@
+{
+    "title": "{%_('Show Log')%}",
+    "barlinks": [["{%_('Index')%}", "%(homeurl)s"]],
+    "seclinks": [],
+    "viewrows": [{ "left":
+		   { "klass": "DMViewLogWeeks",
+		     "render": { "period": "DMPeriodWeekly",
+				 "urlfmt": "%(homeurl)s/log/%(datetime)s" }}},
+		 { "left":
+		   { "klass": "DMViewLog",
+		     "render": { "period": "DMPeriodWeekly" }}}]
+}

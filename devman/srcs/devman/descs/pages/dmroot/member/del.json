@@ -1,0 +1,5 @@
+{
+    "title": "{%_('Delete Member')%}",
+    "action": { "klass": "DMActionMemberDelete",
+		"tourl": "%(homeurl)s/member" }
+}

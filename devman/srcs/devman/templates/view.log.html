@@ -1,0 +1,17 @@
+{% load i18n %}
+{% if view.title %}
+<tr class="title"><td colspan="{{view.width}}">{{view.title}}</td></tr>
+{% endif %}
+{% for logdate in view.logdates %}
+<tr><td colspan="{{ view.width }}">{{ logdate.prompt }}</td></tr>
+{% for log in logdate.entities %}
+<tr><td width="32" rowspan="2">&nbsp</td><td>{{ log.create_time }}</td>
+  <td>{{ log.owner }}</td><td>{{ log.type }}</td></tr>
+<tr><td colspan="{{ view.width_1 }}">{{ log.desc }}</td></tr>
+{% endfor %}
+{% endfor %}
+{% if view.moreurl %}
+<tr><td colspan="{{ view.width }}" align="right">
+  <a href="{{view.moreurl}}">{% trans "More" %}</a>
+</td></tr>
+{% endif %}

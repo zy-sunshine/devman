@@ -1,0 +1,52 @@
+{% load i18n %}
+<tr class="title"><td>{% trans "Member" %}</td>
+  <td>{% trans "User Type" %}</td>
+  <td>{% trans "Mobile" %}</td>
+  <td>{% trans "Delete" %}</td>
+  <td>{% trans "Disable" %}</td>
+  <td>{% trans "Last Login" %}</td>
+  <td colspan="{{ view.row_width }}">{% trans "Permissions" %}</td>
+</tr>
+</tr>
+{% for member in view.members %}
+<tr>
+  <td rowspan="{{ member.rows }}"><a href="{{ member.viewurl }}">{{ member.name }}</a></td>
+  <td rowspan="{{ member.rows }}">{{ member.source }}</td>
+  {% if member.mobile %}
+  <td rowspan="{{ member.rows }}">{{ member.mobile }}</td>
+  {% else %}<td rowspan="{{ member.rows }}">&nbsp;</td>
+  {% endif %}
+
+  {% if member.delcfmurl %}
+  <td rowspan="{{ member.rows }}"><a href="{{ member.delcfmurl }}">{% trans "Delete" %}</a></td>
+  {% else %}
+  <td rowspan="{{ member.rows }}">N/A</td>
+  {% endif %}
+
+  {% if member.disableurl %}
+  <td rowspan="{{ member.rows }}"><a href="{{ member.disableurl }}">{% trans "Disable" %}</a></td>
+  {% else %}
+  <td rowspan="{{ member.rows }}">N/A</td>
+  {% endif %}
+
+  <td rowspan="{{ member.rows }}">{{ member.lastlogin }}</td>
+  {% for perm in member.perms %}
+  {% if perm %}
+  <td><a href="{{ perm.url }}">{{ perm.name }}</a></td>
+  {% else %}
+  <td>&nbsp;</td>
+  {% endif %}
+  {% endfor %}
+</tr>
+{% for permrow in member.permrows %}
+<tr>
+  {% for perm in permrow %}
+  {% if perm %}
+  <td><a href="{{ perm.url }}">{{ perm.name }}</a></td>
+  {% else %}
+  <td>&nbsp;</td>
+  {% endif %}
+  {% endfor %}
+</tr>
+{% endfor %}
+{% endfor %}

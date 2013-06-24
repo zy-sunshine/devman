@@ -1,0 +1,4 @@
+{
+    "title": "{%_('Edit Subsystem')%}",
+    "action": { "klass": "DMActionSubsysEdit" }
+}

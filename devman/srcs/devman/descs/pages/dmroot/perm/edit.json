@@ -1,0 +1,9 @@
+{
+    "title": "{%_('Edit Member Permissions')%}",
+    "barlinks": [["{%_('Home')%}", "%(homeurl)s"],
+                 ["{%_('Member')%}", "%(homeurl)s/member"],
+                 ["{%_('Permission')%}", "%(homeurl)s/perm"]],
+    "tiplinks": [["{%_('Back')%}", "%(homeurl)s/perm"]],
+    "viewrows": [[{ "align": "center",
+		    "klass": "DMViewPermMembers" }]]
+}

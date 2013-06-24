@@ -1,0 +1,4 @@
+{
+    "title": "{%_('Edit Permission Members')%}",
+    "action": { "klass": "DMActionPermMemberEdit" }
+}

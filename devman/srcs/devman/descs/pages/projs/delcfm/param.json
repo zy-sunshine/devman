@@ -1,0 +1,4 @@
+{
+    "title": "{%_('Delete Project Confirm')%}",
+    "viewrows": [{ "center": { "klass": "DMViewProjectDeleteConfirm" } }]
+}

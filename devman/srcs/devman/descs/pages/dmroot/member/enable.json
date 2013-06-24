@@ -1,0 +1,5 @@
+{
+    "title": "{%_('Enable Member')%}",
+    "action": { "klass": "DMActionMemberEnable",
+		"tourl": "%(homeurl)s/member" }
+}

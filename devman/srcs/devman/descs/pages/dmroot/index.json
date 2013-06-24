@@ -1,0 +1,12 @@
+{
+    "title": "{%_('MemberPerm')%}",
+    "barlinks": [["{%_('Index')%}", "%(homeurl)s"],
+		 		 ["{%_('Member')%}", "%(homeurl)s/member"],
+		 		 ["{%_('Permission')%}", "%(homeurl)s/perm"]],
+    "viewrows": [[{ "align": "center",
+		    "title": "{%_('New Events')%}",
+		    "shownums": 5,
+		    "moreurl": "%(homeurl)s/log",
+		    "klass": "DMViewLogPanel",
+		    "render": { "period": "DMPeriodDaily" }}]]
+}

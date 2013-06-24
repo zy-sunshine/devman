@@ -1,0 +1,4 @@
+{
+    "title": "{%_('Login')%}",
+    "viewrows": [{ "center": { "klass": "DMViewLogin"}}]
+}

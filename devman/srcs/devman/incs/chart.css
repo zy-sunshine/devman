@@ -1,0 +1,12 @@
+.stat td{line-height:22px;color:#333333;font-size:14px}
+.chart{position:relative;margin:10px 0px 30px 31px;border:1px solid #B3B3DC}
+.chart div.bar,.chart div.barhl{position:absolute;background:#DCDCF4;border:1px solid #B3B3DC;line-height:0px}
+.chart div.barhl{background:#C2C2F4}
+.chart div.liney{position:absolute;border-top:1px dotted #B9B9B9;line-height:0px}
+.chart div.titx,.chart div.titxhl,.chart div.tity{position:absolute;color:#666;font-size:9px;font-family:Arial;text-align:center;white-space:nowrap}
+.chart div.titxhl{color:#FF0000}
+.chart div.tity{text-align:right}
+.chart div.hit{position:absolute;z-index:1000;width:100px;color:#666;font-size:12px;font-family:Arial}
+.stattop{float:left;margin-top:20px;margin-right:14px;padding:10px;width:199px!important;width:220px;border:1px solid #CDCDCD}
+.stattop .list{margin-top:6px}
+.stattop .list td{height:20px}

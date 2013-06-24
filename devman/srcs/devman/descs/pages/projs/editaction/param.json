@@ -1,0 +1,4 @@
+{
+    "title": "{%_('Show/Edit a Bug')%}",
+    "action": { "klass": "DMActionTaskEdit" }
+}

@@ -1,0 +1,53 @@
+body {
+    background: #DCE2F1;
+}
+
+table.border {
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table tbody tr.menu
+{ 
+    background: #FDE6E0;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+table tbody tr.title
+{
+    background: #FDE6E0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+table tbody tr.head
+{ 
+    background: #FAF9B0;
+}
+
+table tbody tr.focus
+{ 
+    background: #FAF9B0;
+}
+
+table tbody td.active
+{
+}
+
+table tbody td.inactive
+{ 
+    text-decoration: line-through;
+}
+
+input[type=text]
+{
+    width: 100%;
+}
+
+table tbody tr.page input
+{
+    width: 20%;
+}

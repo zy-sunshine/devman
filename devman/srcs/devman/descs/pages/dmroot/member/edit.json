@@ -1,0 +1,4 @@
+{
+    "title": "{%_('Edit Member Properties')%}",
+    "action": { "klass": "DMActionMemberEdit"}
+}

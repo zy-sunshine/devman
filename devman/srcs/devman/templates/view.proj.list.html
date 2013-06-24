@@ -1,0 +1,22 @@
+{% load i18n %}
+<tr class="title"><td colspan="{{ view.width }}">{% trans "Projects" %}</td></tr>
+<tr class="head"><td>{% trans "Project Name" %}</td>
+  <td>{% trans "Old Trac" %}</td>
+  <td>{% trans "New Trac" %}</td>
+  <td>{% trans "Git" %}</td>
+  <td>{% trans "Svn" %}</td>
+  <td>{% trans "Delete" %}</td>
+</tr>
+{% for proj in view.projs %}
+<tr><td>{{ proj.name }}</td>
+  <td><a href="{{ proj.oldtracurl }}">{% trans "Link" %}</a></td>
+  <td><a href="{{ proj.newtracurl }}">{% trans "Link" %}</a></td>
+  <td><a href="{{ proj.giturl }}">{% trans "Link" %}</a></td>
+  <td><a href="{{ proj.svnurl }}">{% trans "Link" %}</a></td>
+  {% if is_super and proj.delurl%}
+  <td><a href="{{ proj.delurl }}">{% trans "Link" %}</a></td>
+  {% else %}
+  <td>N/A</td>
+  {% endif %}
+</tr>
+{% endfor %}

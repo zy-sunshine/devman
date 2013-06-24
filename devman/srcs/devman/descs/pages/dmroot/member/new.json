@@ -1,0 +1,4 @@
+{
+    "title": "{%_('New A Member')%}",
+    "action": { "klass": "DMActionMemberNew"}
+}

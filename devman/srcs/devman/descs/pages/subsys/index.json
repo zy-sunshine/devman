@@ -1,0 +1,17 @@
+{
+    "title": "{%_('List All Subsystems')%}",
+    "barlinks": [["{%_('Index')%}", "%(homeurl)s"]],
+    "seclinks": [],
+    "viewrows": [[{ "align": "center",
+		    "sstype": "svn",
+		    "url": "dmprojs/svn",
+		    "klass": "DMViewSubsysList" }],
+		 [{ "align": "center",
+		    "sstype": "git",
+		    "url": "dmprojs/git",
+		    "klass": "DMViewSubsysList" }],
+		 [{ "align": "center",
+		    "sstype": "trac",
+		    "url": "dmprojs/trac",
+		    "klass": "DMViewSubsysList" }]]
+}

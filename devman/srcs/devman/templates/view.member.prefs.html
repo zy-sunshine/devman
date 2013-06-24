@@ -1,0 +1,45 @@
+{% load i18n %}
+<form action="{{ homeurl }}/member/edit/{{ view.reqmobj.id }}" method="post">{% csrf_token %}
+  <input type="hidden" name="fromurl" value="{{ fromurl }}"/>
+  <tr><td>{% trans "Login Name" %}</td><td>{{ view.reqmobj.member }}</td></tr>
+  <tr><td>{% trans "User Type" %}</td><td>{{ view.reqmobj_source }}</td></tr>
+  <tr><td>{% trans "Show Name" %}</td>
+    {% if view.local_editor %}
+    <td><input type="text" name="EDIT_MEMBER_NAME" value="{{ view.reqmobj.name }}"/></td>
+    {% else %}
+    <td>{{ view.reqmobj.name }}</td>
+    {% endif %}
+  </tr>
+  <tr><td>{% trans "JobNumber" %}</td><td>{{ view.reqmobj.jobnum }}</td></tr>
+  <tr><td>{% trans "Email" %}</td>
+    {% if view.local_editor %}
+    <td><input type="text" name="EDIT_MEMBER_EMAIL" value="{{ view.reqmobj.email }}"/></td>
+    {% else %}<td>{{ view.reqmobj.email }}</td>
+    {% endif %}
+  </tr>
+  <tr><td>{% trans "Mobile" %}</td>
+    {% if view.editor %}
+    <td><input type="text" name="EDIT_MEMBER_MOBILE" value="{{ view.reqmobj.mobile }}"/></td>
+    {% else %}{% if view.reqmobj.mobile %}<td>{{ view.reqmobj.mobile }}</td>
+    {% else %}<td>&nbsp;</td>
+    {% endif %}{% endif %}
+  </tr>
+  {% if view.local_editor %}
+  <tr><td>{% trans "Password" %}</td>
+    <td><input type="password" name="EDIT_MEMBER_PWD"/></td></tr>
+  <tr><td>{% trans "Password Confirm" %}</td>
+    <td><input type="password" name="EDIT_MEMBER_PWDCFM"/></td></tr>
+  {% endif %}
+  {% if view.editor %}
+  <tr><td>{% trans "Theme" %}</td><td>
+      {% for theme in view.themes %}
+      <input type="radio" name="EDIT_MEMBER_THEME" value="{{ theme.value }}" {{ theme.checked }}>{{ theme.label }}</input>
+      {% endfor %}
+  {% else %}
+  <tr><td>{% trans "Theme" %}</td><td>{{ mobj_theme }}</td></tr>
+  {% endif %}
+  {% if view.editor %}
+  <tr><td colspan="{{ view.width }}" align="center">
+      <input type="submit" value="{% trans "Commit/Refresh" %}"/></td></tr>
+  {% endif %}
+</form>

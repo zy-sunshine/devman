@@ -1,0 +1,11 @@
+{
+    "title": "{%_('Welcome to Magic Development Management System')%}",
+    "barlinks": [["{%_('Index')%}", "%(homeurl)s"]],
+    "seclinks": [],
+    "viewrows": [[{"align": "center",
+                   "title": "{%_('New Events')%}",
+                   "shownums": 5,
+                   "moreurl": "%(homeurl)s/log",
+                   "klass": "DMViewLogPanel" ,
+                   "render": { "period": "DMPeriodDaily" }}] ]
+}

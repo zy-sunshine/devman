@@ -1,0 +1,69 @@
+pagejson 设计规范
+
+descs/pages 目录下为网站 URL 对应的相应目录
+
+每个目录下可以有如下文件：
+1. index.json 描述当前目录代表的 URL 的 index 页面
+2. param.json 描述 index 页面，并且将 URl 后面的字符串做 parameter 传入 view 函数。
+	例如 http://www.hackos.org/devman/testparam/param1/param2
+	那么文件  descs/pages/testparam/param.json 为该页面的描述文件
+	
+3. *.json 对应的 URL 页面，例如：
+	http://www.hackos.org/devman/test/custompage
+	那么文件 descs/pages/test/custompage.json 为该页面的描述文件
+
+4. url.conf.json
+	这是一个特殊文件，描述了当前URL的属性，现包括以下几个字段：
+	"permset": true, 如果是 true 则任何人都可以访问，如果是一个列表["devman"] 那么只有拥有 该权限集合的人才能访问
+    "homeurl": true, 如果是 true 则该路径为 homeurl，该路径下的所有 URL 描述文件中的  %(homeurl)s 会被替换为这个地址
+
+    
+描述页面中有两种主要格式，一种是网页内容呈现，另一种是处理 GET POST 提交页面
+1. 网页呈现：
+  a. desc 页面
+	"viewrows": [[{ "align": "center",
+		    "sstype": "svn",
+		    "url": "dmprojs/svn",
+		    "klass": "DMViewSubsysList" }],
+		 [{ "align": "center",
+		    "sstype": "git",
+		    "url": "dmprojs/git",
+		    "klass": "DMViewSubsysList" }],
+		 [{ "align": "center",
+		    "sstype": "trac",
+		    "url": "dmprojs/trac",
+		    "klass": "DMViewSubsysList" }]]
+	viewrows 为一个[[{}], ] 结构，每一个 row 都是一个显示区域（在 table 中的一个元素）
+	这个区域在 django 中体现为 include template，该 template 可以在 klass 中自定义
+	上面这个例子中的 sstype url 其实是一个自定义参数，在 klass 中使用
+	align 为该元素的 排列 center left right，另外还有很多其他属性可以大体制定元素位置
+	width table 区域的 width
+	twidth table 区域的宽度百分比例如："50%"
+	width_1 = width - 1
+	
+  b. klass 实现
+	一般继承于 DMView 并且实现其中的 validate 和 render 方法
+	validate 主要检查当前的权限范围
+	render 是要渲染当前页面，其实返回值是一个用来渲染模板的 dict 
+	
+	默认参数：
+	self.params = params  param.json 处描述的参数传进
+    self.template = None  待渲染 template 文件名
+    self.reqctx = False   是否需要加入 context (我认为需要这个变量，否则好多django系统默认参数例如 STATIC_URL 都不在 template 渲染的变量之中)
+    self.needmobj = True  是否需要用户验证(Member Object)
+	
+2. 处理 GET POST 提交申请
+  a. desc 页面
+	"action": { "klass": "DMActionMemberEnable",
+		"tourl": "%(homeurl)s/member" }
+	默认参数：
+	klass 为处理该请求的 view 函数
+	
+	注意 tourl 是自定义字段
+	
+  b. klass 实现
+	klass 一般继承于 DMAction 并且实现其中的 action 成员函数
+	    action 函数处理完 POST GET 请求后返回一个 tourl (可包含 %(homeurl)s 指定根目录) tourl 会控制该页面之后的跳转
+	    
+	默认参数：
+	self.params 为当前页面的参数，关于参数在 param.json 处描述

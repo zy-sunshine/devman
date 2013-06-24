@@ -1,0 +1,6 @@
+{
+    "title": "{%_('Disable Member')%}",
+    "action": { "klass": "DMActionMemberDisable",
+		"enable": false,
+		"tourl": "%(homeurl)s/member" }
+}

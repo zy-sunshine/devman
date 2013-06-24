@@ -1,0 +1,26 @@
+{% load i18n %}
+<form action="{{ view.actionurl }}" method="post">{% csrf_token %}
+  <input type="hidden" name="fromurl" value="{{ fromurl }}"/>
+  <tr class="title"><td colspan="{{ view.width }}">{{ view.title }}</td></tr>
+  <tr class="head"><td colspan="{{ view.width }}">
+      {% trans "Current members" %}</td></tr>
+  {% for members in view.members0 %}<tr>
+    {% for member in members %}<td>
+      {% if not member %}&nbsp;{% else %}
+      <input type="checkbox" name="{{ member.check }}" checked/>
+      {{ member.name }}
+      {% endif %}
+    </td>{% endfor %}
+  </tr>{% endfor %}
+  <tr class="head"><td colspan="{{ view.width }}">
+      {% trans "Avaiable members" %}</td></tr>
+  {% for members in view.members1 %}<tr>
+    {% for member in members %}<td>
+      {% if not member %}&nbsp;{% else %}
+      <input type="checkbox" name="{{ member.check }}"/>{{ member.name }}
+      {% endif %}
+    </td>{% endfor %}
+  </tr>{% endfor %}
+  <tr><td colspan="{{ view.width }}" align="center">
+      <input type="submit" value="{% trans "Commit" %}"/></td></tr>
+</form>

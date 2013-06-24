@@ -1,0 +1,21 @@
+{
+    "title": "{%_('Show Members')%}",
+    "barlinks": [["{%_('Home')%}", "%(homeurl)s"],
+                 ["{%_('Member')%}", "%(homeurl)s/member"],
+                 ["{%_('Permission')%}", "%(homeurl)s/perm"]],
+    "viewrows": [[{ "align": "left",
+		    "klass": "DMViewMemberScope" } ],
+		 [{ "align": "left",
+		    "klass": "DMViewMemberList",
+		    "name": "memberlist",
+		    "row_width": 3 }],
+		 [{ "align": "left",
+		    "name": "memberlist",
+		    "type": "disables" } ],
+		 [{ "align": "left",
+		    "klass": "DMViewMemberNewSso",
+                    "twidth": "50%"},
+		  { "align": "right",
+		    "klass": "DMViewMemberNewLocal" ,
+                    "twidth": "50%"} ]]
+}

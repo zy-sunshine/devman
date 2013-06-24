@@ -1,0 +1,30 @@
+{% load i18n %}
+{% if view.editable %}
+<form action="{{ view.actionurl }}" method="post">{% csrf_token %}
+  <input type="hidden" name="fromurl" value="{{ fromurl }}"/>
+  {% endif %}
+  <tr class="title"><td colspan="{{ view.row_width }}">{{ view.title0 }}</td></tr>
+  {% for members in view.members0 %}<tr>
+    {% for member in members %}
+    {% if not member %}<td>&nbsp;</td>
+    {% else %}<td>{% if view.editable %}
+      <input type="checkbox" name="{{ member.check }}" checked/>
+      {% endif %}
+      {{ member.name }}</td>
+    {% endif %}
+    {% endfor %}
+  </tr>{% endfor %}
+  {% if view.editable %}
+  <tr class="title"><td colspan="{{ view.row_width }}">{{ view.title1 }}</td></tr>
+  {% for members in view.members1 %}<tr>
+    {% for member in members %}
+    {% if not member %}<td>&nbsp;</td>
+    {% else %}<td><input type="checkbox" name="{{ member.check }}"/>
+      {{ member.name }}</td>
+    {% endif %}
+    {% endfor %}
+  </tr>{% endfor %}
+  <tr><td colspan="{{ view.row_width }}" align="center">
+      <input type="submit" value="{% trans "Commit" %}"/></td></tr>
+  {% endif %}
+{% if view.editable %}</form>{% endif %}

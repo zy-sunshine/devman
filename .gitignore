@@ -3,3 +3,4 @@ tags
 # scons
 .sconsign.dblite
 
+*.pyc

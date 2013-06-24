@@ -1,0 +1,13 @@
+{
+    "title": "{%_('Show Log')%}",
+    "barlinks": [["{%_('Home')%}", "%(homeurl)s"],
+		 ["{%_('Member')%}", "%(homeurl)s/member"],
+		 ["{%_('Permission')%}", "%(homeurl)s/perm"]],
+    "viewrows": [{ "center":
+		   { "klass": "DMViewLogWeeks",
+		     "render": { "period": "DMPeriodWeekly",
+				 "urlfmt": "%(homeurl)s/log/%(datetime)s" }}},
+		 { "center":
+		   { "klass": "DMViewLog",
+		     "render": { "period": "DMPeriodWeekly" }}}]
+}

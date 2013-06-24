@@ -1,0 +1,19 @@
+{
+    "trial": true,
+    "nologin": "nobody",
+    "superusers": ["admin", "netsec"],
+
+    "entityroot_id": 1,
+    "topsyslists": ["log"],
+
+    "db": { "default": {"ENGINE": "django.db.backends.sqlite3", 
+                        "NAME": "devman.sqlite3",
+                        "USER": "", 
+                        "PASSWORD": "", 
+                        "HOST": "", 
+                        "PORT": ""
+                      }
+          },
+    "timezone": "Asia/Shanghai",
+    "language-code": "zh-cn"
+}

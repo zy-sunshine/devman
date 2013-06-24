@@ -1,0 +1,5 @@
+<tr>
+  {% for scope in view.scopes %}
+  <td><a href="{{ scope.url }}">{{ scope.prompt }}</a></td>
+  {% endfor %}
+</tr>
