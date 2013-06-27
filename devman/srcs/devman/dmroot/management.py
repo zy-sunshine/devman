@@ -14,6 +14,14 @@ def initdata(sender, **kwargs):
         iobj = DBIDScope(idtypeid = DBMember.LOCAL, minval = 0, maxval = 1000)
         iobj.save()
         mobj0 = None
+        
+        # create three default permission git svn trac
+        gpermobj = DBPerm(name = "git")
+        spermobj = DBPerm(name = "svn")
+        tpermobj = DBPerm(name = "trac")
+        gpermobj.save()
+        spermobj.save()
+        tpermobj.save()
         for su in superusers:
             userid = AutoLocalUID.request()
             print('Setup DBMember(%s) with userid/jobnum %u.' % (su, userid))
@@ -24,8 +32,12 @@ def initdata(sender, **kwargs):
             mobj.save()
             mobj.UserAddOrEdit(pwd = su)
             if mobj0 is None: mobj0 = mobj
-            permobj = DBPerm(name = "super")
-            mpermobj = DBMemberPerm()
+
+            # assign three default permission to super users
+            DBMemberPerm(member=mobj, perm = gpermobj).save()
+            DBMemberPerm(member=mobj, perm = spermobj).save()
+            DBMemberPerm(member=mobj, perm = tpermobj).save()
+            
         print('Setup Root DBEntity.')
         eobj = DBEntity(id = entityroot_id, klass = 'DMRoot', owner = mobj0,
                         create_date = now, lastedit_date = now)

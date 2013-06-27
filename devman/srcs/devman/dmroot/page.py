@@ -19,7 +19,8 @@ class DMPage(object):
         self.reqctx = True
         if req.is_secure(): protocol = 'https'
         else: protocol = 'http'
-        self.rooturl = '%s://%s%s' % (protocol, req.get_host(), req.path[:-len(req.path)])
+        self.rooturl = '%s://%s%s' % (protocol, req.get_host(), req.path[:-len(req.path_info)])
+        self.rooturl0 = '%s://%s%s' % (protocol, req.get_host(), req.path[:-len(req.path)])
         self.cururl = req.path
         
         fp = _(u'Powered by devman-%(v0)u(django-%(v1)u.%(v2)u.%(v3)u)') %\
@@ -33,6 +34,7 @@ class DMPage(object):
                     'barlinks': [],
                     'filters': [],
                     'rooturl': self.rooturl,
+                    'rooturl0': self.rooturl0,
                     'cururl': self.cururl,
                     'host': req.get_host(),
                     'curtime': datetime.now().strftime(datetimefmt),
@@ -99,8 +101,7 @@ class DMPage(object):
     def loadjson(self, req):
         project = req.GET.get('project', '')
         wikiname =  req.GET.get('index', '')
-        ucobj = DMUrlConf(self.cururl)
-        #ucobj = DMUrlConf(req.path)
+        ucobj = DMUrlConf(req.path_info)
         descPage = ucobj.descs
         self.homeurl = ucobj.get_homeurl(self.rooturl)
         self.kw['homeurl'] = self.homeurl

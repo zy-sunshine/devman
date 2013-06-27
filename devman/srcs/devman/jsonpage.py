@@ -5,6 +5,7 @@ from devman.dmroot.page import DMPage
 import devman.dmroot.views
 import devman.dmsubsys.views
 import devman.dmproj.views
+from devman.settings import trial
 
 mapDMViews = {}
 mapDMActions = {}
@@ -29,7 +30,11 @@ def getDMActionObject(desc, params):
 
 def JsonPage(req):
     pageobj = DMPage(req, getDMViewObject, getDMActionObject)
-#     try: pageobj.loadjson(req)
-#     except DMException, exc: pageobj.set_failed(unicode(exc))
-    pageobj.loadjson(req)
+    
+    if trial:
+        pageobj.loadjson(req)
+    else:
+        try: pageobj.loadjson(req)
+        except DMException, exc: pageobj.set_failed(unicode(exc))
+    
     return pageobj.response(req)

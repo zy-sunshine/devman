@@ -47,7 +47,7 @@ def UpdateSsoRecords(ssobj, addmobjs, rmmobjs):
         if mobj.sourceid == DBMember.LOCAL: utype = 'l'
         elif mobj.sourceid == DBMember.SSOAUTH: utype = 's'
         else: continue # Skip unsupported sourceid.
-        writeset.append(SsoUsersSet(utype, mobj.userid, mobj.member, ''))
+        writeset.append(SsoUsersSet(utype, mobj.userid, mobj.member, getattr(mobj, 'enchexpwd', '')))
     if writeset: open(ssousers_fn, 'wt').write('\n'.join(writeset) + '\n')
     else: open(ssousers_fn, 'wt').write('')
 

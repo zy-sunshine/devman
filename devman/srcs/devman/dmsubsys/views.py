@@ -34,7 +34,7 @@ class DMViewSubsysList(DMView):
             sskw['rowspan'] = len(sskw['members1']) + 1
             if kwPage['is_super']:
                 sskw['editurl'] =\
-                        '%s/subsys/edit/%u' % (kwPage['homeurl'], ssobj.id)
+                        '%s/edit/%u' % (kwPage['homeurl'], ssobj.id)
             subsyses.append(sskw)
         return { 'row_width': self.row_width,
                  'title': '[%s]' % self.sstype,
@@ -70,7 +70,7 @@ class DMViewSubsysEdit(DMView):
             else: members1.append(mkw)
         return { 'title': _('Edit members of %(v0)s[%(v1)s]') %\
                      MkKV(self.ssobj.relpath, self.ssobj.sstype),
-                 'actionurl': '%s/subsys/editact/%u' %\
+                 'actionurl': '%s/editact/%u' %\
                      (kwPage['homeurl'], self.ssobj.id),
                  'members0': MkROW(members0, self.width),
                  'members1': MkROW(members1, self.width) }

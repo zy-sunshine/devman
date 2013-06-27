@@ -32,7 +32,7 @@
     }
 </script>
 
-<form id="languageform" method="post" action="/i18n/setlang/"> 
+<form id="languageform" method="post" action="{{ rooturl }}/i18n/setlang/"> 
 	{% csrf_token %}
     <select id="language" name="language" onchange="languageformdo(this)"> 
    <!--    <input name="next" type="hidden" value="{{request.path}}" />-->  

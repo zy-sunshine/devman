@@ -16,7 +16,6 @@ def _get_subsys_():
 
 def _get_proj_link(rooturl, homeurl, name):
     repourl = rooturl
-    if rooturl[-3:] == '/ns': repourl = rooturl[:-3]
     proj = { 'name': name, 
              'oldtracurl': '%s/dmprojs/trac/%s' % (repourl, name),
              'newtracurl': '%s/wiki/view?project=%s;index=%s' % (homeurl, name, 'WikiStart'),

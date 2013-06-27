@@ -1,7 +1,7 @@
 {
     "trial": true,
     "nologin": "nobody",
-    "superusers": ["admin", "netsec"],
+    "superusers": ["admin"],
 
 	"ssoauthdir": "",
     "entityroot_id": 1,

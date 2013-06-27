@@ -293,16 +293,16 @@ ssoenv_check_context(const ssoenv_t *self)
     }
     /* Get atype & projbuf. */
     strncpy(uribuf, uri, sizeof(uribuf) - 1); uribuf[sizeof(uribuf) - 1] = 0;
-    if (!(p = strstr(uribuf, "/nsprojs/"))) {
+    if (!(p = strstr(uribuf, "/dmprojs/"))) {
 	ssoenv_syslog(self, LOG_NOTICE,
-		      "No 'nsprojs' in URI[%s]: username = [%s]\n",
+		      "No 'dmprojs' in URI[%s]: username = [%s]\n",
 		      uri, self->username);
 	return SSOENV_AUTH_ERR(self);
     }
     atype = p = p + 9;
     if (!(p0 = strchr(p, '/'))) {
 	ssoenv_syslog(self, LOG_NOTICE,
-		      "No / after 'nsprojs' in URI[%s]: username = [%s]\n",
+		      "No / after 'dmprojs' in URI[%s]: username = [%s]\n",
 		      uri, self->username);
 	return SSOENV_AUTH_ERR(self);
     }

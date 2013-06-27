@@ -11,10 +11,8 @@ class DMSubsysBase(object):
         else: self.pobj = pobjs[0]
 
     def getlink(self, kwPage):
-        rooturl = kwPage['rooturl']
-        if rooturl[-3:] == '/ns':
-            return '%s/%s/%s' % (rooturl[:-3], self.descs['url'], self.relpath)
-        return '%s/%s/%s' % (rooturl, self.descs['url'], self.relpath)
+        rooturl0 = kwPage['rooturl0']
+        return '%s/%s/%s' % (rooturl0, self.descs['url'], self.relpath)
 
     def getlinkname(self, kwPage):
         return self.getlink(kwPage)
