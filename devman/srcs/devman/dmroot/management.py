@@ -2,7 +2,8 @@ from datetime import datetime
 from django.db.models.signals import post_syncdb
 from devman.settings import superusers, entityroot_id, topsyslists
 import devman.dmroot.models
-from devman.dmroot.models import DBIDScope, DBMember, DBEntity
+from devman.dmroot.models import DBIDScope, DBMember, DBEntity, DBMemberPerm,\
+    DBPerm
 from devman.dmroot.autoid import AutoLocalUID
 
 def initdata(sender, **kwargs):
@@ -22,7 +23,9 @@ def initdata(sender, **kwargs):
                             enabled = True)
             mobj.save()
             mobj.UserAddOrEdit(pwd = su)
-            if mobj0 is None: mobj0 = mobj        
+            if mobj0 is None: mobj0 = mobj
+            permobj = DBPerm(name = "super")
+            mpermobj = DBMemberPerm()
         print('Setup Root DBEntity.')
         eobj = DBEntity(id = entityroot_id, klass = 'DMRoot', owner = mobj0,
                         create_date = now, lastedit_date = now)

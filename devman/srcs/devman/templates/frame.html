@@ -24,6 +24,24 @@
 {% else %}
 <h1 align="center">{{ title }}</h1>
 {% endif %}
+
+<script  type="text/javascript"> 
+   function languageformdo(obj) {
+            myform = document.getElementById('languageform');
+            myform.submit();
+    }
+</script>
+
+<form id="languageform" method="post" action="/i18n/setlang/"> 
+	{% csrf_token %}
+    <select id="language" name="language" onchange="languageformdo(this)"> 
+   <!--    <input name="next" type="hidden" value="{{request.path}}" />-->  
+         {% for lang in LANGUAGES %} 
+        <option value="{{ lang.0 }}"{% if lang.0 == LANGUAGE_CODE %}selected="selected"{% endif %}> {{ lang.1 }}</option> 
+         {% endfor %} 
+      </select> 
+ </form> 
+
 <table width="100%" align="center"><tr><td>
 <table class="border" cellpadding="4" align="left"><tr class="tiplinks">
   <td><a href="{{ rooturl }}">{% trans "Home" %}</a></td>

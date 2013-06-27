@@ -25,7 +25,9 @@ nologin = configjson.get('nologin', 'nobody')
 superusers = configjson.get('superusers', ('admin',))
 
 ssoauthdir = configjson.get('ssoauthdir', os.path.join(workdir, 'ssoauth'))
-
+if not ssoauthdir:
+    ssoauthdir = os.path.join(workdir, 'ssoauth')
+    
 entityroot_id = configjson.get('entityroot_id', 1)
 topsyslists = configjson.get('topsyslists', None)
 
@@ -57,7 +59,14 @@ TIME_ZONE = configjson.get('timezone')
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-# LANGUAGE_CODE = configjson.get('language-code')
+LANGUAGE_CODE = configjson.get('language-code')
+
+_ = lambda s: s
+
+LANGUAGES = (
+    ('en-us', _('English')), 
+    ('zh-cn', _('Chinese')),
+)
 
 SITE_ID = 1
 

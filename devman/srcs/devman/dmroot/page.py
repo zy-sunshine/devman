@@ -16,11 +16,11 @@ class DMPage(object):
         self.getviewobj = getviewobj
         self.getactionobj = getactionobj
         self.mobj = None
-        self.reqctx = False
+        self.reqctx = True
         if req.is_secure(): protocol = 'https'
         else: protocol = 'http'
-        self.rooturl = '%s://%s%s' % (protocol, req.get_host(), req.path[:-len(req.path_info)])
-        self.cururl = req.path_info
+        self.rooturl = '%s://%s%s' % (protocol, req.get_host(), req.path[:-len(req.path)])
+        self.cururl = req.path
         
         fp = _(u'Powered by devman-%(v0)u(django-%(v1)u.%(v2)u.%(v3)u)') %\
             MkKV(selfver, *django_version[:3])

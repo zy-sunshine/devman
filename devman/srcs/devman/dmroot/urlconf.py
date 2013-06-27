@@ -63,6 +63,7 @@ class DMUrlConf(object):
         self.permset = descs.get('permset', self.permset)
 
     def check_perm(self, mobj):
+        print self.permset
         if self.permset in (True, False): return self.permset
         if 'super' in mobj.getperms(): return True
         for mpobj in DBMemberPerm.objects.filter(member = mobj):

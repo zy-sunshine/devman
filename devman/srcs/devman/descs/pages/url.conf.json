@@ -1,4 +1,4 @@
 {
-    "permset": ["devman"],
+    "permset": true,
     "homeurl": true
 }

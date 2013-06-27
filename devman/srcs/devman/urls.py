@@ -8,6 +8,7 @@ from devman.jsonpage import JsonPage
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+                       (r'^i18n/', include('django.conf.urls.i18n')), 
                        (r'^mymedia/(?P<path>.*)$', serve, { 'document_root': MEDIA_ROOT}),
                        (r'^incs/(?P<path>.*)$', serve, { 'document_root': STATIC_PATH }),
                        (r'^.*$', JsonPage)

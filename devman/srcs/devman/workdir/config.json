@@ -3,6 +3,7 @@
     "nologin": "nobody",
     "superusers": ["admin", "netsec"],
 
+	"ssoauthdir": "",
     "entityroot_id": 1,
     "topsyslists": ["log"],
 
