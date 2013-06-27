@@ -58,7 +58,7 @@ print outColumn2
 
 # assign trac members to devman
 if trial:
-    members = ['admin', 'wangli01', 'liufan01']
+    members = ['admin']
     memrows = inCursor.execute('select * from %s' % inTable1).fetchall()
     outCursor.execute('delete from %s' % outTable3)
     for memrow in memrows:
