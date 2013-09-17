@@ -46,10 +46,10 @@ DMSubsysTypeMap = { 'svn': { 'klass': DMSubsysSVN,
                              'files': ('config', 'description', 'HEAD'),
                              'optfiles': ('packed-prefs',) },
                     'trac': { 'klass': DMSubsysTrac,
-                              'dirs': ('attachments', 'conf', 'db', 'htdocs',
+                              'dirs': ('conf', 'db', 'htdocs',
                                        'log', 'plugins', 'templates'),
                               'files': ('README', 'VERSION'),
-                              'optdirs': ('chrome', 'cgi-bin') } }
+                              'optdirs': ('files', 'attachments', 'chrome', 'cgi-bin') } }
 
 def DMSubsysCheckDir(sstype, path):
     if sstype == 'git': return True
