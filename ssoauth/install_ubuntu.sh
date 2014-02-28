@@ -6,7 +6,20 @@ etcdir=/etc/ssoauth
 bindir=$prefix/bin
 sbindir=$prefix/sbin/
 nssdir=/lib
-pamdir=/lib/i386-linux-gnu/security
+MACHINE_TYPE=`uname -m`
+if [ "$MACHINE_TYPE" = 'x86_64' ]; then
+  echo install on 64-bit...
+  # 64-bit stuff here
+  pamdir=/lib/security
+else
+  echo install on 32-bit...
+  # 32-bit stuff here
+  if [ -d /lib/i386-linux-gnu/security ]; then
+    pamdir=/lib/i386-linux-gnu/security
+  else
+    pamdir=/lib/security
+  fi
+fi
 apache_confdir=/etc/apache2
 apache_modules_confdir=$apache_confdir/mods-available
 apache_modules_confdir_en=$apache_confdir/mods-enabled
