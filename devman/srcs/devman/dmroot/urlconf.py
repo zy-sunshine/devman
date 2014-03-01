@@ -62,9 +62,14 @@ class DMUrlConf(object):
             self.homedir = os.path.relpath(path, pagedir)
         self.permset = descs.get('permset', self.permset)
 
-    def check_perm(self, mobj):
+    def check_perm(self, mobj, url_user_id=None):
         if self.permset in (True, False): return self.permset
-        if 'super' in mobj.getperms(): return True
+        mobj_perms = mobj.getperms(url_user_id)
+        if 'super' in mobj_perms: return True
+        if 'self' in self.permset:
+            if 'self' in mobj_perms: return True
+        if 'super' in self.permset and 'super' not in mobj_perms:
+            return False
         for mpobj in DBMemberPerm.objects.filter(member = mobj):
             if mpobj.perm.name in self.permset: return True
         return False

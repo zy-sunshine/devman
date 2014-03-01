@@ -36,7 +36,7 @@ class DBMember(models.Model):
     def getsource(self):
         return self.SIDALL[self.sourceid][0]
 
-    def getperms(self):
+    def getperms(self, req_user_id=None, req_user_name=None):
         mpobjs = DBMemberPerm.objects.filter(member = self)
         npobjs = []
         for mpobj in mpobjs:
@@ -56,6 +56,10 @@ class DBMember(models.Model):
         perms = map(lambda pobj: pobj.name, pobjs)
         if self.member in superusers and 'super' not in perms:
             perms.append('super')
+        if req_user_id is not None and int(req_user_id) == self.id:
+            perms.append('self')
+        if req_user_name is not None and req_user_name == self.member:
+            perms.append('self')
         return perms
 
     def UserAddOrEdit(self, pwd = ''):

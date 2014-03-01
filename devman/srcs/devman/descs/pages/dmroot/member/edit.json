@@ -1,4 +1,5 @@
 {
     "title": "{%_('Edit Member Properties')%}",
+    "perms": ["self"],
     "action": { "klass": "DMActionMemberEdit"}
 }

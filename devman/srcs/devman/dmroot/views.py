@@ -183,6 +183,7 @@ class DMViewMemberPrefs(DMViewMemberPublic):
         self.width = 2
         self.template = 'view.member.prefs.html'
         self.reqctx = True
+        self.url_user_id = params and params[0] or None
 
     def render(self, kwPage, req, desc):
         kwView = DMViewMemberPublic.render(self, kwPage, req, desc)
@@ -350,6 +351,7 @@ class DMActionMemberEnable(DMActionMemberPublic):
 class DMActionMemberEdit(DMActionMemberPublic):
     def __init__(self, desc, params):
         DMActionMemberPublic.__init__(self, desc, params)
+        self.url_user_id = params and params[0] or None
     
     def action(self, kw, req, desc):
         if kw['mobj'].id == self.memid: memobj = kw['mobj']

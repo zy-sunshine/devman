@@ -48,7 +48,8 @@ class DMPage(object):
                     'chartjs': self.rooturl + '/incs/chart.js',
                     'logout': self.rooturl + '/login' }
 
-    def loadmobj(self, req):
+    def loadmobj(self, req, url_user_id=None):
+        '''url_self_permit is the parameter that user viewing his own page url'''
         if isinstance(self.mobj, DBMember): return
         if trial:
             if req.POST.has_key('loginname'):
@@ -68,7 +69,7 @@ class DMPage(object):
         self.kw['mobj'] = self.mobj
         self.kw['mobj_prompt'] = _('Login as %s') %\
             ('%s(%s)' % (self.mobj.name, member))
-        self.kw['mobj_perms'] = self.mobj.getperms()
+        self.kw['mobj_perms'] = self.mobj.getperms(url_user_id)
         self.kw['mobj_url'] = '%s/dmroot/member/view/%u' % (self.rooturl, self.mobj.id)
         self.kw['is_super'] = 'super' in self.kw['mobj_perms']
         mpobjs = DBMemberPrefs.objects.filter(member = self.mobj)
@@ -78,15 +79,23 @@ class DMPage(object):
             self.kw['mobj_theme'] = mpobjs[0].theme
         self.kw['themecss'] = '%s/incs/theme.%s.css' %\
             (self.rooturl, self.kw['mobj_theme'])
-        if not self.kw['urlconf'].check_perm(self.mobj):
+
+        if not self.kw['urlconf'].check_perm(self.mobj, url_user_id):
             raise DMPermissionError, _('Access here is not permitted.')
 
-    def loadview(self, align, descView, req, params):
+    def loadview(self, align, descView, req, params, viewPerms=None):
         if 'name' in descView and descView['name'] in self.named_views:
             viewobj = self.named_views[descView['name']]
         else:
             viewobj = self.getviewobj(descView, params)
-            if self.mobj is None and viewobj.needmobj: self.loadmobj(req)
+            url_user_id = getattr(viewobj, 'url_user_id', None)
+            if self.mobj is None and viewobj.needmobj: self.loadmobj(req, url_user_id)
+            if viewPerms is not None:
+                for perm in self.mobj.getperms(url_user_id):
+                    if perm in viewPerms:
+                        break
+                else:
+                    return []
             if 'name' in descView: self.named_views[descView['name']] = viewobj
         if not viewobj.validate(self.kw, req, descView): return []
         kwView = viewobj.render(self.kw, req, descView)
@@ -111,14 +120,18 @@ class DMPage(object):
         self.kw['project'] = project
         self.kw['urlconf'] = ucobj
         self.kw['hobj'] = ucobj.get_dbhomeobj()
-      
+
         if req.path_info != '/login':
             self.kw['logout']= { 'prompt': _('Logout'),
                                  'urlpath': self.kw['logout'] }
+        if 'perms' in descPage:
+            self.kw['urlconf'].permset.extend(descPage['perms'])
         if 'title' in descPage: self.kw['title'] = J_(descPage['title'])
         if "action" in descPage:
-            if self.mobj is None: self.loadmobj(req)
             actionobj = self.getactionobj(descPage['action'], ucobj.params)
+            url_user_id = getattr(actionobj, 'url_user_id', None)
+            # Get member object to check whether the user have this permission
+            if self.mobj is None: self.loadmobj(req, url_user_id)
             actionurl = actionobj.action(self.kw, req, descPage['action'])
             self.kw['tourl'] = actionurl
             if project != '' and actionurl.index('project=')==-1:
@@ -149,12 +162,14 @@ class DMPage(object):
             kwViewRow = []
             if isinstance(descViewRow, list):
                 for descView in descViewRow:
+                    viewPerms = descView.get(u'perms', None)
                     align = descView.get('align', 'center')
-                    kwViewRow.extend(self.loadview(align, descView, req, ucobj.params))
+                    kwViewRow.extend(self.loadview(align, descView, req, ucobj.params, viewPerms))
             elif isinstance(descViewRow, dict):
                 for align in ('left', 'center', 'right'):
                     if align not in descViewRow: continue
-                    kwViewRow.extend(self.loadview(align, descViewRow[align], req, ucobj.params))
+                    viewPerms = descViewRow.get(u'perms', None)
+                    kwViewRow.extend(self.loadview(align, descViewRow[align], req, ucobj.params, viewPerms))
             else:
                 raise DMJsonDescError, _('descViewRow must be list or dict.')
             if kwViewRow: self.kw['viewrows'].append(kwViewRow)
