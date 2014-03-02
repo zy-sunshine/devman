@@ -54,6 +54,17 @@ class DMViewLogPanel(DMViewLog):
                  'title': J_(desc.get('title', '')),
                  'moreurl': moreurl }
 
+from devman.dmproj.views import getProjLinks
+class DMViewMyProjectsPanel(DMView):
+    def __init__(self, desc, params):
+        DMView.__init__(self, desc, params)
+        self.width = 6
+        self.template = 'view.proj.list.html'
+
+    def render(self, kwPage, req, desc):
+        projs = getProjLinks(kwPage)
+        return { 'projs': projs }
+
 class DMViewMemberNewLocal(DMView):
     def __init__(self, desc, params):
         DMView.__init__(self, desc, params)

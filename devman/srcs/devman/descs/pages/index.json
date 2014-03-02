@@ -4,8 +4,16 @@
     "seclinks": [],
     "viewrows": [[{"align": "center",
                    "title": "{%_('New Events')%}",
+                   "perms": ["super"],
                    "shownums": 5,
                    "moreurl": "%(homeurl)s/log",
                    "klass": "DMViewLogPanel" ,
-                   "render": { "period": "DMPeriodDaily" }}] ]
+                   "render": { "period": "DMPeriodDaily" }}],
+                [{"align": "center",
+                  "title": "{%_('My Projects')%}",
+                  "shownums": 5,
+                  "klass": "DMViewMyProjectsPanel"
+                  }]
+                ]
 }
+

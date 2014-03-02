@@ -14,36 +14,40 @@ def _get_subsys_():
             projs.append(subsys.relpath)
     return projs
 
-def _get_proj_link(rooturl, homeurl, name):
+def _get_proj_link(kwPage, rooturl, homeurl, name):
     repourl = rooturl
-    proj = { 'name': name, 
-             'oldtracurl': '%s/dmprojs/trac/%s' % (repourl, name),
-             'newtracurl': '%s/wiki/view?project=%s;index=%s' % (homeurl, name, 'WikiStart'),
-             'giturl': '%s/dmprojs/git/%s' % (repourl, name),
+    proj = { 'name': name,
+             'tracurl': '%s/dmprojs/trac/%s' % (repourl, name),
+             'giturl': '%s/dmprojs/gitweb/?p=%s.git;a=summary' % (repourl, name),
              'svnurl': '%s/dmprojs/svn/%s' % (repourl, name)
            }
-    if homeurl[-9:] != '/devman':
-        proj['delurl'] = '%s/proj/delcfm/%s' % (homeurl, name)
+    if kwPage['is_super']:
+        proj['delurl'] = '%s/delcfm/%s' % (homeurl, name)
     return proj
 
 def getProjs(kwPage):
     projs = []
-    if kwPage['homeurl'][-9:] == '/devman':
+    #if kwPage['homeurl'][-9:] == '/devman':
+    if 0:
+        print 'test'
         for subsys in _get_subsys_():
             projs.append({'name': subsys})
     else:
-        for dbproj in DBProject.objects.filter(home=kwPage['hobj']):
+        #for dbproj in DBProject.objects.filter(home=kwPage['hobj']):
+        for dbproj in DBProject.objects.all():
             projs.append({'name': dbproj.name})
     return projs
 
 def getProjLinks(kwPage):
     projs = []
-    if kwPage['homeurl'][-9:] == '/devman':
+    #if kwPage['homeurl'][-9:] == '/devman':
+    if 0:
         for subsys in _get_subsys_():
-            projs.append(_get_proj_link(kwPage['rooturl'], kwPage['homeurl'], subsys))
+            projs.append(_get_proj_link(kwPage, kwPage['rooturl'], kwPage['homeurl'], subsys))
     else:
-        for pobj in DBProject.objects.filter(home=kwPage['hobj']):
-            projs.append(_get_proj_link(kwPage['rooturl'], kwPage['homeurl'], pobj.name))
+        #for pobj in DBProject.objects.filter(home=kwPage['hobj']):
+        for pobj in DBProject.objects.all():
+            projs.append(_get_proj_link(kwPage, kwPage['rooturl'], kwPage['homeurl'], pobj.name))
     return projs
 
 class DMViewProjectList(DMView):
@@ -64,8 +68,8 @@ class DMViewProjectTableList(DMView):
         self.template = 'view.task.projectlist.html'
         
     def render(self, kwPage, req, descTaskView):
-	proj = req.GET.get('project', '')
-	title = descTaskView.get('title', '')
+        proj = req.GET.get('project', '')
+        title = descTaskView.get('title', '')
         projs = getProjs(kwPage)
         return {'title': J_(title), 'projects': MkROW(projs, self.width), 'proj': proj}
 	
@@ -140,7 +144,7 @@ class DMViewProjectDeleteConfirm(DMViewConfirm):
         return _('Do you really want to delete "%s"?') % self.projname
 
     def get_confirm_url(self, kwPage, req, desc):
-        return '%s/proj/del/%s' % (kwPage['homeurl'], self.projname)
+        return '%s/del/%s' % (kwPage['homeurl'], self.projname)
 
     def get_cancel_url(self, kwPage, req, desc):
         return kwPage['homeurl']
