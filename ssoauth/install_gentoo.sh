@@ -28,9 +28,9 @@ install srcs/pam_ssolocal.so $DESTDIR$pamdir
 install srcs/pam_ssoremote.so $DESTDIR$pamdir
 install scripts/ssoauth_cache_update.py $DESTDIR$sbindir
 install scripts/ssoauth_set_password.py $DESTDIR$sbindir
-install -m 660 -o git -g git confs/shortcuts.txt $DESTDIR$etcdir
-install -m 660 -o git -g git confs/ssousers.txt $DESTDIR$etcdir
-install -m 660 -o git -g git confs/ssoaccess.txt $DESTDIR$etcdir
+[ ! -f $DESTDIR$etcdir/shortcuts.txt ] && install -m 660 -o git -g git confs/shortcuts.txt $DESTDIR$etcdir
+[ ! -f $DESTDIR$etcdir/ssousers.txt ] && install -m 660 -o git -g git confs/ssousers.txt $DESTDIR$etcdir
+[ ! -f $DESTDIR$etcdir/ssoaccess.txt ] && install -m 660 -o git -g git confs/ssoaccess.txt $DESTDIR$etcdir
 install -m 644 confs/90_ssoauth.conf $DESTDIR$apache_modules_confdir
 install -m 644 confs/91_ssoauth_test.conf $DESTDIR$apache_modules_confdir
 install -m 644 confs/etc-setup.patch $DESTDIR$etcdir
