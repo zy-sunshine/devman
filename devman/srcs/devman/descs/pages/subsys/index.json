@@ -13,5 +13,9 @@
 		 [{ "align": "center",
 		    "sstype": "trac",
 		    "url": "dmprojs/trac",
+		    "klass": "DMViewSubsysList" }],
+		 [{ "align": "center",
+		    "sstype": "proposal",
+		    "url": "dmprojs/proposal",
 		    "klass": "DMViewSubsysList" }]]
 }

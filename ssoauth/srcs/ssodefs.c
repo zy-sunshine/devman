@@ -318,6 +318,8 @@ ssoenv_check_context(const ssoenv_t *self)
 
     if (!strcmp(atype, "svn")) typec = 's';
     else if (!strcmp(atype, "trac")) typec = 't';
+    else if (!strcmp(atype, "git")) typec = 'g';
+    else if (!strcmp(atype, "proposal")) typec = 'p';
     else typec = ' ';
 
     snprintf(fname, sizeof(fname), "%s/ssoaccess.txt", self->cachedir);

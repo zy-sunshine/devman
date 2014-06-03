@@ -13,6 +13,7 @@ class DBSubsys(models.Model):
         if self.sstype == 'svn': return 's'
         elif self.sstype == 'git': return 'g'
         elif self.sstype == 'trac': return 't'
+        elif self.sstype == 'proposal': return 'p'
         return None
 
 def CmpDBSubsysMember(smobj0, smobj1):

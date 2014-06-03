@@ -37,6 +37,9 @@ class DMSubsysGIT(DMSubsysBase):
 class DMSubsysTrac(DMSubsysBase):
     pass
 
+class DMSubsysProposal(DMSubsysBase):
+    pass
+
 DMSubsysTypeMap = { 'svn': { 'klass': DMSubsysSVN,
                              'dirs': ('conf', 'db', 'hooks', 'locks'),
                              'files': ('format', 'README.txt'),
@@ -49,10 +52,14 @@ DMSubsysTypeMap = { 'svn': { 'klass': DMSubsysSVN,
                               'dirs': ('conf', 'db', 'htdocs',
                                        'log', 'plugins', 'templates'),
                               'files': ('README', 'VERSION'),
-                              'optdirs': ('files', 'attachments', 'chrome', 'cgi-bin') } }
+                              'optdirs': ('files', 'attachments', 'chrome', 'cgi-bin') },
+                    'proposal': { 'klass': DMSubsysProposal,
+                             'dirs': (),
+                             'files': (),
+                             'optfiles': () } }
 
 def DMSubsysCheckDir(sstype, path):
-    if sstype == 'git': return True
+    if sstype in ('git', 'proposal'): return True
     ssmap = DMSubsysTypeMap[sstype]
     cnt = 0
     for subdir in ssmap['dirs']:
