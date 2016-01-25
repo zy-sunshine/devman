@@ -4,6 +4,7 @@ from devman.settings import entityroot_id, topsyslists
 from devman.dmroot import _, timefmt, datetimefmt, datestart, MkKV
 from devman.dmroot.exceptions import DMIDError, DMEntityError
 import devman.dmroot.period as PeriodModule
+import traceback
 from devman.dmroot.models import DBMember, DBEntity, DBAttrPositiveInteger,\
     DBAttrInteger, DBAttrString, DBAttrDateTime, DBAttrMember,\
     DBCommentText, DBCommentCachedText
@@ -176,4 +177,9 @@ def EntityCheckMember(mobj):
 SysList_eobjs = DBEntity.objects.filter(parent = entityroot_id).order_by('id')
 
 def GetSysList(name):
-    return SysList_eobjs[topsyslists.index(name)]
+    try:
+        return SysList_eobjs[topsyslists.index(name)]
+    except Exception, e:
+        traceback.print_exc()
+        return []
+
