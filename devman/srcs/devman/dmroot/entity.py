@@ -177,9 +177,5 @@ def EntityCheckMember(mobj):
 SysList_eobjs = DBEntity.objects.filter(parent = entityroot_id).order_by('id')
 
 def GetSysList(name):
-    try:
-        return SysList_eobjs[topsyslists.index(name)]
-    except Exception, e:
-        traceback.print_exc()
-        return []
+    return SysList_eobjs[topsyslists.index(name)]
 
