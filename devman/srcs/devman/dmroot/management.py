@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.db.models.signals import post_syncdb
+from django.db.models.signals import post_init
 from devman.settings import superusers, entityroot_id, topsyslists
 import devman.dmroot.models
 from devman.dmroot.models import DBIDScope, DBMember, DBEntity, DBMemberPerm,\
@@ -53,4 +53,4 @@ def initdata(sender, **kwargs):
         sl_eobjs.append(eobj)
     print('All init data inserted!')
 
-post_syncdb.connect(initdata, sender = devman.dmroot.models)
+post_init.connect(initdata, sender = devman.dmroot.models)
