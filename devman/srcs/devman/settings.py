@@ -121,15 +121,22 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    "django.contrib.sessions", 
-    "devman.dmroot",
-    "devman.dmsubsys",
-    "devman.dmproj",
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'devman.dmroot',
+    'devman.dmsubsys',
+    'devman.dmproj',
 )
 
 STATIC_PATH = os.path.join(devmanroot, "incs")
 TEMPLATES_PATH = os.path.join(devmanroot, "templates")
 WIKI_ATTACHMENTS_ROOT = os.path.join(workdir, 'attachments')
+
+STATIC_URL = '/static/'
 
 # Bytes! Default: 1 MB.
 WIKI_ATTACHMENTS_MAX = 2 * 1024 * 1024
