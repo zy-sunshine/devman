@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include "ssorecords.h"
 
-#define  WITH_LOG
+//#define  WITH_LOG
 
 static const char *access_fn = "/etc/ssoauth/ssoaccess.txt";
 
