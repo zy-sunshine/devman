@@ -69,7 +69,7 @@ get_uid(const ssouser_rec_t *record)
 static const char *pw_passwd = "x";
 static const char *pw_gecos_local = "auto-generated localauth user";
 static const char *pw_gecos_sso = "auto-generated ssoauth user";
-static const char *pw_dir = "/home/apache/devman/git";
+static const char *pw_dir = "/home/devman/git";
 static const char *pw_shell = "/usr/bin/sso-git-shell.exe";
 static enum nss_status
 fill_passwd(const ssouser_rec_t *record, struct passwd *result,
