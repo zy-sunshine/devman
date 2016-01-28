@@ -99,6 +99,7 @@ int main(int argc, char **argv)
     struct tm tmv;
     char tmbuf[64];
     FILE *logfp; int idx;
+    char cwd[1024];
 #endif
 
     /*
@@ -127,6 +128,10 @@ int main(int argc, char **argv)
     for (idx = 0; idx < argc; ++idx)
 	fprintf(logfp, "%s ", argv[idx]);
     fprintf(logfp, "]\n");
+    if (getcwd(cwd, sizeof(cwd)) != NULL)
+        fprintf(logfp, "uid: %d gid: %d cwd: %s\n", getuid(), getgid(), cwd);
+    else
+        perror("getcwd() error");
     fclose(logfp);
 #endif
 
