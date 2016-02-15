@@ -68,4 +68,9 @@ class DMLogList(DMEntityBase):
     def log_task(self, mobj, hobj, desc):
         DMLog().new(mobj, hobj, DMLog.Task, desc, self) 
         
-SysLogList = DMLogList()
+def getLogger():
+    global _SysLogList
+    if _SysLogList is None:
+        _SysLogList = DMLogList()
+    return _SysLogList
+

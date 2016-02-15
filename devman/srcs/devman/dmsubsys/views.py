@@ -2,7 +2,7 @@
 from devman.dmroot import _, MkROW, MkROW0, MkKV
 from devman.dmroot.models import CmpDBMember
 from devman.dmroot.view import DMView, DMAction
-from devman.dmroot.log import SysLogList
+from devman.dmroot.log import getLogger
 from devman.dmsubsys.models import DBSubsys, DBSubsysMember,\
     CmpDBSubsysMember, UpdateSsoRecords
 from devman.dmsubsys.subsys import DMSubsysObject
@@ -102,7 +102,7 @@ class DMActionSubsysEdit(DMAction):
                 rmset.append(mobj)
         UpdateSsoRecords(self.ssobj, addset, rmset)
         logfmt = _('Subsys [%(v0)s[%(v1)s]] is edited by [%(v2)s]: Member [%(v3)s] added, [%(v4)s] removed.')
-        SysLogList.log_subsys(kw['mobj'], kw['hobj'],
+        getLogger().log_subsys(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(self.ssobj.relpath,
                                             self.ssobj.sstype,
                                             kw['mobj'].name,

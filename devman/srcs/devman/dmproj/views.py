@@ -2,7 +2,7 @@
 from devman.dmroot import _, J_, MkKV, MkROW
 from devman.dmroot.exceptions import DMPermissionError, DMParamError
 from devman.dmroot.view import DMView, DMViewConfirm, DMAction
-from devman.dmroot.log import SysLogList
+from devman.dmroot.log import getLogger
 
 from devman.dmsubsys.models import DBSubsys
 from devman.dmproj.models import DBProject
@@ -103,7 +103,7 @@ class DMActionProjectNew(DMAction):
         pobj = DBProject(home=kw['hobj'],name = name)
         pobj.save()
         logfmt = _('Project [%(v0)s] is created by [%(v1)s].')
-        SysLogList.log_proj(kw['mobj'], kw['hobj'],
+        getLogger().log_proj(kw['mobj'], kw['hobj'],
                             logfmt % MkKV(pobj.name, kw['mobj'].name))
         return DMAction.action(self, kw, req, desc)
 
@@ -131,7 +131,7 @@ class DMActionProjectEdit(DMActionProjectPublic):
         pobj = self.get_proj(kw)
         pobj.save()
         logfmt = _('Project [%(v0)s] is edited by [%(v1)s].')
-        SysLogList.log_proj(kw['mobj'], kw['hobj'],
+        getLogger().log_proj(kw['mobj'], kw['hobj'],
                             logfmt % MkKV(pobj.name, kw['mobj'].name))
         return DMAction.action(self, kw, req, desc)
 
@@ -165,7 +165,7 @@ class DMActionProjectDelete(DMActionProjectPublic):
         self.check_perm(kw)
         pobj = self.get_proj(kw)
         logfmt = _('Project [%(v0)s] is removed by [%(v1)s].')
-        SysLogList.log_proj(kw['mobj'], kw['hobj'],
+        getLogger().log_proj(kw['mobj'], kw['hobj'],
                             logfmt % MkKV(pobj.name, kw['mobj'].name))
         DBProject.objects.filter(home=kw['hobj'], name = pobj.name).delete()
         return DMAction.action(self, kw, req, desc)
