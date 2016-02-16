@@ -10,6 +10,7 @@ from devman.dmroot.models import DBMember, CmpDBMember, DBMemberPrefs,\
 from devman.dmroot.member import NewLocalMember, GetSsoMember,\
     DelMember, DisableMember
 from devman.dmroot.log import getLogger
+from hashlib import md5
 
 class DMViewLogin(DMView):
     def __init__(self, desc, params):
@@ -638,3 +639,70 @@ class DMActionPermMemberEdit(DMAction):
                                             ', '.join(rmset),
                                             kw['mobj'].name))
         return DMAction.action(self, kw, req, desc)
+
+from django.http import HttpResponse
+
+def basic_challenge(realm=None):
+    if realm is None:
+        realm = 'Restricted Access'
+    response = HttpResponse('Authorization Required',
+                            content_type="text/plain")
+    response['WWW-Authenticate'] = 'Basic realm="%s"' % (realm)
+    response.status_code = 401
+    return response
+
+def basic_authenticate(authentication, suburl):
+    (authmeth, auth) = authentication.split(' ', 1)
+    if 'basic' != authmeth.lower():
+        return None
+
+    auth = auth.strip().decode('base64')
+    username, password = auth.split(':', 1)
+
+    # create http response
+    realm = None
+    if realm is None:
+        realm = 'Restricted Access'
+    resp = HttpResponse('Authorization Required',
+                        content_type="text/plain")
+    resp['WWW-Authenticate'] = 'Basic realm="%s"' % (realm)
+    mobj = DBMember.objects.filter(member = username)
+    if not mobj:
+        resp.status_code = 401
+        print('Can not find username "%s"' % username)
+        return resp
+    mobj = mobj[0]
+    # check passwd
+    if str(mobj.getPasswd()).upper() != md5(password).hexdigest().upper():
+        resp.status_code = 401
+        print('invalid password for "%s"' % username)
+        return resp
+    # check perm
+    if mobj.checkSubsysPerm(suburl):
+        resp.status_code = 200
+        resp['X-Username'] = username
+    else:
+        print('"%s" has no permission "%s"' % (username, suburl))
+        resp.status_code = 401
+    return resp
+
+def DMAuthView(request):
+    auth = request.META.get('HTTP_AUTHORIZATION', '')
+
+    print request.META.get('X-Real-IP', None)
+    orig_uri = request.META.get('X-Origin-URI', None)
+    script_name = request.META.get('SCRIPT_NAME', None)
+    suburl = orig_uri[len(script_name):].strip('/').split('/')
+    if suburl: suburl = suburl[0]
+    else: suburl = ''
+    if auth:
+        resp = basic_authenticate(auth, suburl)
+        if resp is not None:
+            #successfully authenticated
+            return resp
+        else:
+            return basic_challenge()
+
+    # nothing matched, still return basic challange
+    return basic_challenge()
+

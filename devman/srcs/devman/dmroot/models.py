@@ -3,8 +3,8 @@ from devman.settings import ssoauthdir, superusers
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from devman.dmroot.ssoauth import SsoUsersAddOrEdit, SsoUsersDel
-
-# Create your models here.
+from devman.dmroot.ssoauth import SsoUsersGet, SsoUsersSet,\
+    SsoAccessGet, SsoAccessSet
 
 class DBIDValue(models.Model):
     idtypeid = models.PositiveIntegerField()
@@ -72,6 +72,33 @@ class DBMember(models.Model):
     def UserDel(self):
         SsoUsersDel(self.member)
 
+    def getPasswd(self):
+        if hasattr(self, '_enchexpwd'):
+            return self._enchexpwd
+        ssousers_fn = os.path.join(ssoauthdir, 'ssousers.txt')
+        if not os.path.isfile(ssousers_fn): ssouserslns = []
+        else: ssouserslns = open(ssousers_fn, 'rt').read().splitlines()
+        writeset = []
+        for ln in ssouserslns:
+            userkw = SsoUsersGet(ln)
+            if userkw['user'] == str(self.member):
+                setattr(self, '_enchexpwd', userkw['enchexpwd'])
+                break
+        else:
+            setattr(self, '_enchexpwd', None)
+        return self._enchexpwd
+
+    def checkSubsysPerm(self, suburl):
+        from devman.dmsubsys.models import DBSubsysMember
+        if self.member in superusers: return True
+        slist = suburl.split('/')
+        if len(slist) < 2: return False
+        for sysperm in DBSubsysMember.objects.filter(member=self):
+            if DBSubsys.ConvertTypeToChar(slist[0]) == sysperm.sschar() and \
+                sysperm.relpath == slist[1]:
+                return True
+        return False
+
 class DBMemberPrefs(models.Model):
     member = models.ForeignKey(DBMember)
     theme = models.CharField(max_length=64)
@@ -138,3 +165,4 @@ class DBCommentCachedText(models.Model):
     entity = models.ForeignKey(DBEntity)
     idx = models.PositiveIntegerField()
     value = models.CharField(max_length = maxlen_textpiece)
+
