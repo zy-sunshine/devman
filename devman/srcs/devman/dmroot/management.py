@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.db.models.signals import post_init
+from django.db.models.signals import post_migrate
 from devman.settings import superusers, entityroot_id, topsyslists
 import devman.dmroot.models
 from devman.dmroot.models import DBIDScope, DBMember, DBEntity, DBMemberPerm,\
@@ -7,7 +7,7 @@ from devman.dmroot.models import DBIDScope, DBMember, DBEntity, DBMemberPerm,\
 from devman.dmroot.autoid import AutoLocalUID
 
 def initdata(sender, **kwargs):
-    if kwargs['db'] != 'default': return
+    if kwargs['using'] != 'default': return
     now = datetime.now()
     if not DBMember.objects.all().exists():
         print('Setup DBIDScope(%u, %u) for %u.' % (0, 1000, DBMember.LOCAL))
@@ -53,4 +53,4 @@ def initdata(sender, **kwargs):
         sl_eobjs.append(eobj)
     print('All init data inserted!')
 
-post_init.connect(initdata, sender = devman.dmroot.models)
+post_migrate.connect(initdata)
