@@ -9,7 +9,7 @@ from devman.dmroot.models import DBMember, CmpDBMember, DBMemberPrefs,\
     DBPerm, CmpDBPerm, DBPermSubperm, DBMemberPerm
 from devman.dmroot.member import NewLocalMember, GetSsoMember,\
     DelMember, DisableMember
-from devman.dmroot.log import SysLogList
+from devman.dmroot.log import getLogger
 
 class DMViewLogin(DMView):
     def __init__(self, desc, params):
@@ -26,7 +26,7 @@ class DMViewLogWeeks(DMView):
         self.template = 'view.log.weeks.html'
 
     def render(self, kwPage, req, desc):
-        weekrows = MkROW(SysLogList.render_urls(kwPage['homeurl'],
+        weekrows = MkROW(getLogger().render_urls(kwPage['homeurl'],
                                                 desc['render']), self.width)
         return { 'weekrows': weekrows }
 
@@ -41,12 +41,12 @@ class DMViewLog(DMView):
         self.template = 'view.log.html'
 
     def render(self, kwPage, req, desc):
-        logdates = SysLogList.render_subs_insteps(desc['render'], self.curdate, kwPage['hobj'])
+        logdates = getLogger().render_subs_insteps(desc['render'], self.curdate, kwPage['hobj'])
         return { 'logdates': logdates }
 
 class DMViewLogPanel(DMViewLog):
     def render(self, kwPage, req, desc):
-        logdates = SysLogList.render_subs_insteps(desc['render'], self.curdate, kwPage['hobj'])
+        logdates = getLogger().render_subs_insteps(desc['render'], self.curdate, kwPage['hobj'])
         if len(logdates) > 0:
             logdates[0]['entities'] = logdates[0]['entities'][:desc['shownums']]
         moreurl = desc['moreurl'] % {'homeurl': kwPage['homeurl']}
@@ -287,7 +287,7 @@ class DMActionMemberNew(DMAction):
             mtype = _('Sso member')
         mobj.UserAddOrEdit(pwd = pwd)
         logfmt = _('%(v0)s [%(v1)s] is added by [%(v2)s]')
-        SysLogList.log_member(kw['mobj'], kw['hobj'],
+        getLogger().log_member(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(mtype, mobj.name, kw['mobj'].name))
         return DMAction.action(self, kw, req, desc) 
  
@@ -329,7 +329,7 @@ class DMActionMemberDelete(DMActionMemberPublic):
         if mobjname is None:
             raise DMParamError, _('The member [%s] is in using.') % self.memobj.name
         logfmt = _('Member [%(v0)s] is removed by [%(v1)s]')
-        SysLogList.log_member(kw['mobj'], kw['hobj'],
+        getLogger().log_member(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(mobjname, kw['mobj'].name))
         return DMAction.action(self, kw, req, desc)
 
@@ -342,7 +342,7 @@ class DMActionMemberDisable(DMActionMemberPublic):
         self.memobj.enabled = False
         self.memobj.save()
         logfmt = _('Member [%(v0)s] is disabled by [%(v1)s]')
-        SysLogList.log_member(kw['mobj'], kw['hobj'],
+        getLogger().log_member(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(self.memobj.name, kw['mobj'].name))
         return DMAction.action(self, kw, req, desc)
 
@@ -355,7 +355,7 @@ class DMActionMemberEnable(DMActionMemberPublic):
         self.memobj.enabled = True
         self.memobj.save()
         logfmt = _('Member [%(v0)s] is enabled by [%(v1)s]')
-        SysLogList.log_member(kw['mobj'], kw['hobj'],
+        getLogger().log_member(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(self.memobj.name, kw['mobj'].name))
         return DMAction.action(self, kw, req, desc)
 
@@ -393,7 +393,7 @@ class DMActionMemberEdit(DMActionMemberPublic):
         mpobj.theme = req.POST.get('EDIT_MEMBER_THEME', 'default')
         mpobj.save()
         logfmt = _('Member [%(v0)s] is edited by [%(v1)s]')
-        SysLogList.log_member(kw['mobj'], kw['hobj'],
+        getLogger().log_member(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(memobj.name, kw['mobj'].name))
         return DMAction.action(self, kw, req, desc)
 
@@ -422,7 +422,7 @@ class DMActionMemberPermEdit(DMActionMemberPublic):
                 DBMemberPerm.objects.filter(member = memobj, perm = pobj).delete()
                 rmset.append(pobj.name)
         logfmt = _('Member [%(v0)s] is edited by [%(v1)s]: Permission [%(v2)s] added, [%(v3)s] removed.')
-        SysLogList.log_member(kw['mobj'], kw['hobj'],
+        getLogger().log_member(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(memobj.name, kw['mobj'].name,
                                             ', '.join(addset), ', '.join(rmset)))
         return DMAction.action(self, kw, req, desc)
@@ -450,7 +450,7 @@ class DMActionPermNew(DMAction):
         pobj.save()
         logmsg = _('[%(v0)s] add a new permission [%(v1)s].') %\
             MkKV(kw['mobj'].name, perm)
-        SysLogList.log_perm(kw['mobj'], kw['hobj'], logmsg)
+        getLogger().log_perm(kw['mobj'], kw['hobj'], logmsg)
         return DMAction.action(self, kw, req, desc)
 
 class DMViewPermList(DMView):
@@ -544,7 +544,7 @@ class DMActionPermEdit(DMAction):
                 DBPermSubperm.objects.filter(perm = self.pobj, subperm = pobj).delete()
                 rmset.append(pobj.name)
         logfmt = _('Permission [%(v0)s] is edited by [%(v1)s]: Permission [%(v2)s] added, [%(v3)s] removed.')
-        SysLogList.log_member(kw['mobj'], kw['hobj'],
+        getLogger().log_member(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(self.pobj.name, kw['mobj'].name,
                                             ', '.join(addset), ', '.join(rmset)))
         return DMAction.action(self, kw, req, desc)
@@ -565,7 +565,7 @@ class DMActionPermDel(DMAction):
         DBMemberPerm.objects.filter(perm = self.pobj).delete()
         self.pobj.delete()
         logfmt = _('Permission [%(v0)s] is deleted by [%(v1)s].')
-        SysLogList.log_member(kw['mobj'], kw['hobj'],
+        getLogger().log_member(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(self.pobj.name, kw['mobj'].name))
         return DMAction.action(self, kw, req, desc)
 
@@ -632,7 +632,7 @@ class DMActionPermMemberEdit(DMAction):
             pmobj = DBMemberPerm(member = mobj, perm = self.pobj)
             pmobj.save()
         logfmt = _('Permission [%(v0)s] is added to Members [%(v1)s], and removed from [%(v2)s] by [%(v3)s].')
-        SysLogList.log_member(kw['mobj'], kw['hobj'],
+        getLogger().log_member(kw['mobj'], kw['hobj'],
                               logfmt % MkKV(self.pobj.name,
                                             ', '.join(addset),
                                             ', '.join(rmset),

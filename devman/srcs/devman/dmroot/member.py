@@ -4,7 +4,7 @@ from devman.dmroot import _, MkKV
 from devman.dmroot.models import DBMember, DBMemberPrefs, DBPerm,\
     DBMemberPerm, DBPermSubperm
 from devman.dmroot.autoid import AutoLocalUID
-#from devman.dmroot.log import SysLogList
+#from devman.dmroot.log import getLogger
 from devman.dmroot.entity import EntityCheckMember
 
 #class ExportUpdater(object):
@@ -120,7 +120,7 @@ def GetSsoMember(member):
 #    mobj.enabled = True
 #    mobj.save()
 #    logfmt = _('%(v0)s [%(v1)s] is added automatically')
-#    SysLogList.log_member(mobj, logfmt % MkKV(prompt, mobj.name))
+#    getLogger().log_member(mobj, logfmt % MkKV(prompt, mobj.name))
 #    return mobj
 
 def DelMember(mobj):
