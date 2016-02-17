@@ -10,10 +10,14 @@ class DBSubsys(models.Model):
     relpath = models.CharField(max_length = 256)
 
     def sschar(self):
-        if self.sstype == 'svn': return 's'
-        elif self.sstype == 'git': return 'g'
-        elif self.sstype == 'trac': return 't'
-        elif self.sstype == 'proposal': return 'p'
+        return DBSubsys.ConvertTypeToChar(self.sstype)
+
+    @staticmethod
+    def ConvertTypeToChar(typ):
+        if typ == 'svn': return 's'
+        elif typ == 'git': return 'g'
+        elif typ == 'trac': return 't'
+        elif typ == 'proposal': return 'p'
         return None
 
 def CmpDBSubsysMember(smobj0, smobj1):
