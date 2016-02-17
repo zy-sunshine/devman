@@ -23,10 +23,11 @@
 @@ -1,5 +1,8 @@
  auth		required	pam_env.so 
 -auth		required	pam_unix.so try_first_pass likeauth nullok
++#auth		required	pam_unix.so try_first_pass likeauth nullok
 +auth		[success=done new_authtok_reqd=ok ignore=ignore auth_err=ignore default=bad]	pam_ssolocal.so /etc/ssoauth
 +auth		[success=done new_authtok_reqd=ok ignore=ignore auth_err=ignore default=bad]	pam_unix.so try_first_pass likeauth nodelay
 +auth		[success=done new_authtok_reqd=ok ignore=ignore default=bad]	pam_ssoremote.so /etc/ssoauth
-+auth		required	pam_faildelay.so
++#auth		required	pam_faildelay.so
  auth		optional	pam_permit.so
  
  account		required	pam_unix.so 
