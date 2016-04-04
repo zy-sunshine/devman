@@ -691,10 +691,14 @@ def DMAuthView(request):
 
     print request.META.get('X-Real-IP', None)
     orig_uri = request.META.get('X-Origin-URI', None)
+    print 'orig_uri %s' % orig_uri
     script_name = request.META.get('SCRIPT_NAME', None)
-    suburl = orig_uri[len(script_name):].strip('/').split('/')
-    if suburl: suburl = suburl[0]
-    else: suburl = ''
+    print 'script_name %s' % script_name
+    if orig_uri.startswith('/devman'):
+        suburl = orig_uri[len('/devman'):].strip('/').split('/')
+        if suburl: suburl = suburl[0]
+    for prefix in ('/dmprojs', ):
+        suburl = orig_uri[len(prefix):].strip('/')
     if auth:
         resp = basic_authenticate(auth, suburl)
         if resp is not None:
