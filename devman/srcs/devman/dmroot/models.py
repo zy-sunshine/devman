@@ -89,13 +89,13 @@ class DBMember(models.Model):
         return self._enchexpwd
 
     def checkSubsysPerm(self, suburl):
-        from devman.dmsubsys.models import DBSubsysMember
+        from devman.dmsubsys.models import DBSubsysMember, DBSubsys
         if self.member in superusers: return True
         slist = suburl.split('/')
         if len(slist) < 2: return False
         for sysperm in DBSubsysMember.objects.filter(member=self):
-            if DBSubsys.ConvertTypeToChar(slist[0]) == sysperm.sschar() and \
-                sysperm.relpath == slist[1]:
+            if DBSubsys.ConvertTypeToChar(slist[0]) == sysperm.subsys.sschar() \
+                and sysperm.subsys.relpath == slist[1]:
                 return True
         return False
 
