@@ -13,8 +13,8 @@ devman 这个项目源自某团队内部项目管理系统，可以满足中型�
 
 安装说明见：
 -------------------
-http://www.hackos.org/wiki/index.php/Devman_UserGuide
+https://wiki.hackos.org/wiki/Devman_UserGuide
 
 WIKI Index
 -------------------
-http://www.hackos.org/wiki/index.php/Devman
+https://wiki.hackos.org/wiki/Devman
