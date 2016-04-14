@@ -651,7 +651,7 @@ def basic_challenge(realm=None):
     response.status_code = 401
     return response
 
-def basic_authenticate(authentication, suburl):
+def basic_authenticate(authentication, suburl, isroot):
     (authmeth, auth) = authentication.split(' ', 1)
     if 'basic' != authmeth.lower():
         return None
@@ -678,7 +678,10 @@ def basic_authenticate(authentication, suburl):
         print('invalid password for "%s"' % username)
         return resp
     # check perm
-    if mobj.checkSubsysPerm(suburl):
+    if isroot:
+        resp.status_code = 200
+        resp['X-Username'] = username
+    elif mobj.checkSubsysPerm(suburl):
         resp.status_code = 200
         resp['X-Username'] = username
     else:
@@ -694,13 +697,15 @@ def DMAuthView(request):
     print 'orig_uri %s' % orig_uri
     script_name = request.META.get('SCRIPT_NAME', None)
     print 'script_name %s' % script_name
+    isroot = False
     if orig_uri.startswith('/devman'):
+        isroot = True
         suburl = orig_uri[len('/devman'):].strip('/').split('/')
         if suburl: suburl = suburl[0]
     for prefix in ('/dmprojs', ):
         suburl = orig_uri[len(prefix):].strip('/')
     if auth:
-        resp = basic_authenticate(auth, suburl)
+        resp = basic_authenticate(auth, suburl, isroot)
         if resp is not None:
             #successfully authenticated
             return resp
