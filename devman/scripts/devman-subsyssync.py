@@ -6,9 +6,11 @@ if 'DEVMAN_WORKDIR' not in os.environ:
     os.environ['DEVMAN_WORKDIR'] = os.path.abspath(os.getcwd())
 workdir = os.environ['DEVMAN_WORKDIR']
 print('Workdir = [%s]' % workdir)
+import django
+django.setup()
+
 import devman.settings
 from django.db import models
-
 from devman.dmsubsys.models import DBSubsys, DBSubsysMember
 from devman.dmsubsys.subsys import DMSubsysTypeMap, DMSubsysCheckDir
 
