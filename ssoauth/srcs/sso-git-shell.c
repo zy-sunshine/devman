@@ -329,12 +329,27 @@ check_access(const char *arg, char *userbuf, size_t szuserbuf)
     for (rec = (const ssoaccess_rec_t *)ssorecord_first(ssoaccess, &iter);
 	 rec;
 	 rec = (const ssoaccess_rec_t *)ssorecord_next(ssoaccess, &iter)) {
-	if (rec->base.type != 'g') continue;
+
 	ssofield_getstr(rec_user, rec->user, sizeof(rec->user));
-	if (strcmp(user, rec_user)) continue;
 	ssofield_getstr(rec_subsys, rec->subsys, sizeof(rec->subsys));
-	if (strcmp(subsys, rec_subsys)) continue;
 	ssofield_getstr(rec_ip, rec->ip, sizeof(rec->ip));
+
+#ifdef WITH_LOG
+{
+    FILE *logfp; int idx;
+    if (!(logfp = fopen(logfn, "at"))) {
+	idx = errno;
+	die_errno("Can not open [%s]: %d(%s)", logfn, idx, strerror(idx));
+    }
+    fprintf(logfp, "got    -> type(%c), user(%s) subsys(%s) ip(%s)\n", rec->base.type, rec_user, rec_subsys, rec_ip);
+    fprintf(logfp, "expect -> type(%c), user(%s) subsys(%s) ip(%s)\n", 'g', user, subsys, ip);
+    fclose(logfp);
+}
+#endif
+
+	if (rec->base.type != 'g') continue;
+	if (strcmp(user, rec_user)) continue;
+	if (strcmp(subsys, rec_subsys)) continue;
 	if (*rec_ip != 0 && strcmp(rec_ip, ip)) continue;
 	ssorecord_close(ssoaccess);
 	return ct_gitshell;
