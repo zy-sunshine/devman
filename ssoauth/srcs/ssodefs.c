@@ -294,14 +294,14 @@ ssoenv_check_context(const ssoenv_t *self)
     /* Get atype & projbuf. */
     strncpy(uribuf, uri, sizeof(uribuf) - 1); uribuf[sizeof(uribuf) - 1] = 0;
     if (!(p = strstr(uribuf, "/dmprojs/"))) {
-	ssoenv_syslog(self, LOG_NOTICE,
+	ssoenv_syslog(self, LOG_ERR,
 		      "No 'dmprojs' in URI[%s]: username = [%s]\n",
 		      uri, self->username);
 	return SSOENV_AUTH_ERR(self);
     }
     atype = p = p + 9;
     if (!(p0 = strchr(p, '/'))) {
-	ssoenv_syslog(self, LOG_NOTICE,
+	ssoenv_syslog(self, LOG_ERR,
 		      "No / after 'dmprojs' in URI[%s]: username = [%s]\n",
 		      uri, self->username);
 	return SSOENV_AUTH_ERR(self);
@@ -310,7 +310,7 @@ ssoenv_check_context(const ssoenv_t *self)
     subsys = p = p0 + 1;
     if ((p0 = strchr(p, '/'))) *p0 = 0;
     if (*subsys == 0) {
-	ssoenv_syslog(self, LOG_NOTICE,
+	ssoenv_syslog(self, LOG_ERR,
 		      "No subsystem name in URI[%s]: username = [%s]\n",
 		      uri, self->username);
 	return SSOENV_AUTH_ERR(self);
@@ -324,7 +324,7 @@ ssoenv_check_context(const ssoenv_t *self)
 
     snprintf(fname, sizeof(fname), "%s/ssoaccess.txt", self->cachedir);
     if (!(ssoaccess = ssorecord_open(fname, sizeof(ssoaccess_rec_t), "rb"))) {
-	ssoenv_syslog(self, LOG_NOTICE, "open [%s] failed\n", fname);
+	ssoenv_syslog(self, LOG_ERR, "open [%s] failed\n", fname);
 	return SSOENV_AUTH_ERR(self);
     }
     for (rec = (const ssoaccess_rec_t *)ssorecord_first(ssoaccess, &iter);
@@ -341,7 +341,7 @@ ssoenv_check_context(const ssoenv_t *self)
 	return SSOENV_SUCCESS(self);
     }
     /* All auth failed. */
-    ssoenv_syslog(self, LOG_NOTICE,
+    ssoenv_syslog(self, LOG_ERR,
 		  "All auth failed: username = [%s], URI = [%s], CONTEXT = [%s]\n",
 		  self->username, uri, context);
     return SSOENV_AUTH_ERR(self);
