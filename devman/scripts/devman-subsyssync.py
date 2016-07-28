@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import dircache, os, sys
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'devman.settings'
