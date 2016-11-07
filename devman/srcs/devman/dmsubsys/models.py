@@ -55,9 +55,9 @@ def UpdateSsoRecords(ssobj, addmobjs, rmmobjs):
         writeset.append(SsoUsersSet(utype, mobj.userid, mobj.member, getattr(mobj, 'enchexpwd', '')))
     if writeset:
         content = '\n'.join(writeset) + '\n'
-        open(ssousers_fn, 'wt').write(content)
+        open(ssousers_fn, 'rt+').write(content)
     else:
-        open(ssousers_fn, 'wt').write('')
+        open(ssousers_fn, 'rt+').write('')
 
     # Update ssoaccess.txt
     writeset = []

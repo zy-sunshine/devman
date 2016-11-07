@@ -39,7 +39,7 @@ def SsoUsersAddOrEdit(usertype, uid, user, enchexpwd):
             userln = None
     if userln: writeset.append(userln)
     content = ''.join(writeset)
-    open(ssousers_fn, 'wt').write(content)
+    open(ssousers_fn, 'rt+').write(content)
 
 def SsoUsersDel(user):
     ssousers_fn = os.path.join(ssoauthdir, 'ssousers.txt')
@@ -50,5 +50,5 @@ def SsoUsersDel(user):
         userkw = SsoUsersGet(ln)
         if userkw['user'] != user: writeset.append(ln + '\n')
     content = ''.join(writeset)
-    open(ssousers_fn, 'wt').write(content)
+    open(ssousers_fn, 'rt+').write(content)
 
