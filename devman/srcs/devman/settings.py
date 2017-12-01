@@ -65,7 +65,7 @@ _ = lambda s: s
 
 LANGUAGES = (
     ('en-us', _('English')), 
-    ('zh-cn', _('Chinese')),
+    ('zh-hans', _('Chinese')),
 )
 
 SITE_ID = 1
@@ -141,3 +141,4 @@ STATIC_URL = '/static/'
 
 # Bytes! Default: 1 MB.
 WIKI_ATTACHMENTS_MAX = 2 * 1024 * 1024
+ALLOWED_HOSTS=['*', ]
