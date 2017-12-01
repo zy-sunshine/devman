@@ -4,3 +4,8 @@ tags
 .sconsign.dblite
 
 *.pyc
+*.o
+*.exe
+*.lib
+*.so
+*.os
